@@ -1,0 +1,76 @@
+<!-- </nav> -->
+
+<div class="xyz">
+  <img src="../assets/images/fp.png" />
+</div>
+
+<div class="container">
+  <div class="card" *ngIf="isNotRegistered">
+    <div class="card-header">
+      <h1>Sign-Up</h1>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        Email:<input type="email" name="username" [(ngModel)]="userI.email" />
+      </div>
+      <br />
+      <div class="row">
+        Password:<input type="password" name="password" [(ngModel)]="userI.password" />
+      </div>
+      <br />
+      <div class="row">
+        Username:<input type="text" name="username" #uname [(ngModel)]="user.name" />
+      </div>
+      <br />
+      <div class="row">
+
+        Role:<select name="Role" id="Role" #role [(ngModel)]="user.role">
+          <option value="" disabled selected>Select a role</option>
+          <option value="Vet">Vet</option>
+          <option value="PetOwner">PetOwner</option>
+        </select>
+      </div>
+      <div class="row"></div>
+      <br />
+
+      <div class="row">
+
+        <button (click)="signUp()" class="btn btn-outline-success">
+          Sign Up
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card" *ngIf="isConfirm">
+    <div class="card-header">
+      <h1>Confirm Email</h1>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        Code:<input type="text" name="code" [(ngModel)]="userI.code" />
+      </div>
+      <div class="card-footer">
+
+        <div class="row">
+          <form (ngSubmit)="onsubmitdata()" #validateform name="input">
+            <input (click)="confirmSignUp()" name="role" type="submit" value="submit" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <p>register works!</p>
+  emailId:<input type="text" name="email" #email [(ngModel)]="userI.email"><br>
+  Password:<input type="text" name="Password" [(ngModel)]="userI.password"><br>
+  userName:<input type="text" name="username" #uname [(ngModel)]="user.name"><br>
+  role:<input type="text" name="role" #role [(ngModel)]="user.role"><br>
+  <button (click)="onsubmitdata(uname.value,role.value)">submit</button>
+  <button (click)="signUp()" class="btn btn-outline-success">
+      Register
+    </button> -->

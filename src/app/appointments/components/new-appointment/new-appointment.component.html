@@ -1,0 +1,97 @@
+<div id="page-container">
+  <p class="backbtn" id="heading" (click)="goBack()"> <i class="fa fa-arrow-left" aria-hidden="true"></i> Back to
+    Appointments</p>
+  <h2 id="heading">New Appointment</h2>
+  <h6>Fields marked with <span style="color: red;">* </span> are mandatory. </h6>
+  <div id="errorDiv" style="display: none; color: red;"></div>
+  <hr>
+  <div id="form-container">
+    <form id="appointment-form" #userForm="ngForm">
+      <div id="calendar">
+        <label for="" class="required-field">Appointment Date:</label>
+        <input type="text" #refdate="ngModel" name="date" onfocus="(this.type='date')" required
+          onblur="if(!this.value) this.type='text'" ngModel [min]="minDate" (input)="getTime($event)">
+        <div *ngIf="refdate.errors && (refdate.dirty || refdate.touched)" class="alert alert-danger ">
+          <div [hidden]="!refdate.errors">
+            Please select the date.
+          </div>
+        </div>
+      </div>
+      <br>
+      <label for="" class="required-field">Appointment Time:</label>
+      <div class="time-slot1">
+        <div id="time-slot" *ngFor="let slot of vetSlotes; let i=index">
+          <button #timeBtn (click)="appTime(timeBtn.value,i)" [value]="slot"
+            [ngClass]="{ 'selected': selectedButtonIndex === i }">
+            {{ slot }}
+          </button>
+        </div>
+      </div>
+      <div id="patient-details">
+        <h2>Patient Details</h2>
+        <form>
+          <label for="petParentName" class="required-field">PetParent:</label>
+          <select name="vetname" id="vetname" (change)="getPetParentID($event)" [(ngModel)]="selectedPetParentId"
+            required>
+            <option *ngFor="let petParent of petParents" [value]="petParent.petParentId">{{petParent.petParentName}} ---
+            </option>
+          </select>
+
+          <label for="pet-name" class="required-field">Pet :</label>
+          <select name="pet" id="pet" (change)="getPetID($event)" [(ngModel)]="selectedPetId"
+            [disabled]="!selectedPetParentId" required>
+            <option *ngFor="let pet of pets" [value]="pet.petId">{{pet.petName}}</option>
+          </select>
+        </form>
+
+        <h2>Other Details</h2>
+        <label for="pet-issues" class="required-field">Pet Issues</label>
+        <input type="text" id="pet-parent" name="pet-parent" required [(ngModel)]="newAppointment.pet_issues">
+        <label for="patient-condition" class="required-field">Reason for visit:</label>
+        <textarea id="patient-condition" name="patient-condition" required
+          [(ngModel)]="newAppointment.reasons_for_visit"></textarea>
+
+        <button type="reset" data-bs-toggle="modal" data-bs-target="#exampleModal" id="cancel-btn"> Reset</button>
+        <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" [disabled]="!userForm.form.valid"
+          id="bookAppointment-btn">
+          BookAppointment</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<div class="modal fade popup" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h2>Book Appointment</h2>
+        <p>Do you want to book appointment?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-bs-dismiss="modal" id="cancel-btn">Cancel</button>
+        <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal1" id="bookAppointment-btn"
+          (click)="onSumbitForm()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade popup" id="exampleModal111" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Thanks for Booking an Appointment !</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-bs-dismiss="modal" id="#exampleModal1" id="bookAppointment-btn"
+          routerLink="/dashboard">Okay</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

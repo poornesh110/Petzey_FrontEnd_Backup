@@ -1,0 +1,66 @@
+<div id="chat_window" class="modal-body">
+  <!-- <button (click)="check()">click me</button> -->
+  <div class="top_menu">
+    <div class="buttons">
+      <div class="button close"></div>
+      <div class="button minimize"></div>
+      <div class="button maximize"></div>
+    </div>
+    <div class="title d-flex justify-content-between">
+      <img
+        class="d-flex justify-content-start"
+        src="../../../assets/images/Petzy_Logo.png"
+        width="65px"
+        height="65px"
+        style="border-radius: 15x"
+      />
+      <h1 class="d-flex justify-content-between">{{ name }}</h1>
+      <img
+        class="d-flex justify-content-end"
+        src="assets/images/close.png"
+        width="45px"
+        height="45px"
+        style="border-radius: 15x"
+        routerLink="/dashboard/view-appointments"
+        (click)="updateDate()"
+      />
+    </div>
+  </div>
+  <ul class="messages">
+    <li
+      class="message right"
+      *ngFor="let item of messageList"
+      [ngClass]="{
+        left: item.message_side === 'receiver',
+        right: item.message_side === 'sender'
+      }"
+    >
+      <div class="avatar">
+        <!-- <img src="assets/images/tom.svg" /> -->
+        <!-- <h5>{{ vetName }}</h5> -->
+      </div>
+      <div class="text_wrapper">
+        <div class="text">{{ item.message }}</div>
+      </div>
+    </li>
+  </ul>
+  <div class="bottom_wrapper clearfix">
+    <div class="message_input_wrapper">
+      <input
+        class="message_input"
+        placeholder="Message..."
+        [(ngModel)]="messageInput"
+        (keyup.enter)="sendMessage()"
+      />
+    </div>
+    <div
+      class="send_message"
+      (click)="sendMessage()"
+      *ngIf="messageInput.trim() !== ''"
+    >
+      <div class="icon"></div>
+      <div class="text">Send</div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

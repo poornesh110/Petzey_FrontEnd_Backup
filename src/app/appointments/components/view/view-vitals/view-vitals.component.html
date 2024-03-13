@@ -1,0 +1,29 @@
+[19:29] S,A,Aishwarya,TDCL R
+
+<div class="components">
+  <app-prescriptions></app-prescriptions>
+  <div class="all-components">
+    <div class="card-vitals">
+      <h4 style="font-family: 'Inter var', sans-serif;">Vitals</h4>
+      <div>
+        <div class="image">
+          <span> <img src="assets/images/heart.svg"></span>
+          <span><i class="heart-icon"></i> {{ vital.bpm }} BPM</span>
+        </div>
+        <div class="image1">
+          <span><img class="rotate" src="assets/images/thermometer-half.svg"></span>
+          <span><i class="temp-icon"></i> {{ vital.temperature }} °C</span>
+        </div>
+        <div class="image">
+          <span><img src="assets/images/lungs.svg"></span>
+          <span><i class="respiratory-icon "></i> {{ vital.heartRate }} BPM</span>
+        </div>
+      </div>
+    </div>
+    <app-view-symptoms></app-view-symptoms>
+    <app-view-tests></app-view-tests>
+    <app-view-recommended-doctors></app-view-recommended-doctors>
+  </div>
+</div>
+
+<app-view-comments></app-view-comments>

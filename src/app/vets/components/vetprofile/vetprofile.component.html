@@ -1,0 +1,67 @@
+<div class="frame112">
+  <div class="section-header">
+    <div class="content">
+      <div class="text-supporting">
+        <div class="text">Account Details</div>
+        <div class="supporting-text">Manager your account details here</div>
+      </div>
+      <div class="actions">
+        <div class="button04"></div>
+        <div class="button03"></div>
+        <div class="button02"></div>
+        <div class="button01">
+          <button class="button-base" style="text-decoration: none; color: black;" (click) = "navigate()">Edit</button>
+        </div>
+      </div>
+      <div class="divider"></div>
+    </div>
+  </div>
+  <div class="frame111">
+    <div class="ellipse1"></div>
+    <div class="frame55">
+      <div class="frame114">
+        <div class="frame53">
+          <div class="name">Name : </div>
+          <div class="dr">Dr.</div>
+          <div class="nameValue">{{vet.vetName}}</div>
+        </div>
+        <div class="frame57">
+          <div class="npiNo">NPI No : </div>
+          <div class="npiNoValue">{{vet.vetId}}</div>
+        </div>
+        <div class="frame58">
+          <div class="speciality">Speciality : </div>
+          <div class="specialityValue">{{vet.speciality}}</div>
+        </div>
+      </div>
+      <div class="frame115">
+        <div class="frame54">
+          <div class="mobile">Mobile : </div>
+          <div class="mobileValue">+41 {{vet.mobileNo}}</div>
+        </div>
+        <div class="frame56">
+          <div class="email">Email :</div>
+          <div class="emailValue">{{vet.email}}</div>
+        </div>
+        <div class="frame55">
+          <div class="clinic">Clinic :</div>
+          <div class="clinicValue">{{clinic.clinicName}}, {{clinic.clinicLocation}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div style="margin-left: 19%;"><button routerLink="/dashboard/allVets" (click)="getVet()">
+    &larr; Back to all vets
+</button>
+</div>
+<div style="margin-top: 1000px; margin-left: 7%;"> <app-view-vet-details></app-view-vet-details> 
+    <button class="btn btn-danger" routerLink="/dashboard/editVet" style="margin-left: 90%;">
+      Edit
+    </button>
+</div>
+<br>
+<div style="margin-top: 1000px; margin-left: 6%;"> <app-login></app-login> </div> -->
+
+<router-outlet></router-outlet>

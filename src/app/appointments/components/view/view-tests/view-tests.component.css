@@ -1,0 +1,54 @@
+
+.card-tests {
+  position: relative;
+  left:45px;
+  top : 5px;
+  height: 200px;
+  width:550px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 32px;
+  gap: 32px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.card-tests h3 {
+  margin-bottom: 50px;
+  width: 288px;
+  height: 28px;
+  font-weight: 500;
+ 
+}
+.card div {
+  display: flex;
+  justify-content: space-evenly;
+  top: 30px;
+  position: relative;
+}
+ 
+.head h4{
+  width: 30px;
+  height: 40px;
+  left: 50px;
+  margin-top: 40px;
+  margin-left: 700px;
+  text-align: center;
+  font-size: larger;
+ 
+}
+ 
+p {
+  background: #ffe0e0;
+  border: none;
+  padding: 8px 16px;
+  margin: 4px;
+  border-radius: 16px;
+  cursor: default;
+  height: 40px;
+  width: fit-content;
+}
+ 
+p:hover {
+  background: #ffcccc;
+}
+ 
+ 

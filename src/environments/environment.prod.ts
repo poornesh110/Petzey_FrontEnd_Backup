@@ -1,0 +1,22 @@
+export const environmentProduction = {
+    getAllapiUrl: 'https://appointmentservice.bt.skillassure.com/appointment/',
+    domain: 'https://appointmentservice.bt.skillassure.com/appointment/',
+    vetdomain: 'https://vetservice.bt.skillassure.com/api',
+    petdomain: 'https://petservice.bt.skillassure.com/pet',
+    vet: 'https://vetservice.bt.skillassure.com/api/vet',
+    pet: 'https://apigateway.bt.skillassure.com/pet/pet/',
+    pet3: 'https://petservice.bt.skillassure.com/pet/',
+    pet2: 'https://petservice.bt.skillassure.com/pet/getpetByParentId/',
+    clinic: 'https://vetservice.bt.skillassure.com/api/vet/clinic',
+    chat: 'https://chatservice.bt.skillassure.com/chat-socket',
+    cognito: {
+        userPoolId: 'ap-south-1_CIQdUFlbG',
+        userPoolWebClientId: '5rns74g3hqve13dmpfctgblcl8',
+    },
+    production: true,
+    DataUrl: 'https://account.bt.skillassure.com/credentials/savecredentials',
+    PetURL: `https://petservice.bt.skillassure.com/pet`,
+    CredURL: 'https://account.bt.skillassure.com/credentials/getall',
+    PetOwnerUrl: 'https://petservice.bt.skillassure.com/pet/postPetParent',
+    VetUrl: 'https://vetservice.bt.skillassure.com/api/vet/post',
+};
