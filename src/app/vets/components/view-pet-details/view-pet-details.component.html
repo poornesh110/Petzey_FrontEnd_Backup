@@ -16,7 +16,7 @@
             </div>
             <div class="patient-info">
                 <!-- <div *ngFor="let pet of parentData"> -->
-                <p class="text1">Gender : <span class="text2">12{{pet.gender}}</span></p>
+                <p class="text1">Gender : <span class="text2">{{pet.gender}}</span></p>
                 <p class="text1">Age : <span class="text2">{{pet.age}} years</span></p>
                 <p class="text1">Blood Group : <span class="text2"> {{pet.bloodGroup}}</span></p>
                 <p class="text1">Date of Birth : <span class="text2">{{pet.dateOfBirth}}</span></p>
@@ -25,5 +25,31 @@
 
         </div>
 
+        <div style="border: 1px solid gray; margin: 32px;"></div>
+        <div class="col-sm  d-flex justify-content-between" style="padding: 32px;">
+            <div class="card">
+                <div class="profile-pic " id="pic">
+                    <div class="profile-pic-container d-flex ">
+                        <img src="{{pet.petParent.imageURL}}" id="output" width="100px" height="100px" />
+                        <div class="parent" style="padding: 26px;">
+                            <p>Pet Owner</p>
+                            <p><b>{{pet.petParent.petParentName}}</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="pet-owner">
+
+                </div>
+                <div class="info" style="margin-top: 16px">
+                    <p class="text"><i class="fa-regular fa-envelope"></i>{{pet.petParent.email}} </p>
+                    <p class="text"><i class="fa-solid fa-phone"></i> {{pet.petParent.phoneNumber}}</p>
+                    <p class="text"> <i class="fa-solid fa-house"></i> {{pet.petParent.address}}</p>
+                </div>
+
+            </div>
+
+        </div>
+
 
     </div>
+</div>

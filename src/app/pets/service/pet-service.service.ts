@@ -56,8 +56,8 @@ export class PetServiceService {
     return this.http.get<Pet>(this.petURL + `/get/${id}`);
   }
 
-  getPetList() {
-    return this.http.get(`${this.petURL}/getAll`);
+  getPetList(): Observable<Pet[]> {
+    return this.http.get<Pet[]>(`${this.petURL}/getAll`);
   }
 
   public removePetz(PetData: Pet) {

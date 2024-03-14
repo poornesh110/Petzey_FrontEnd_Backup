@@ -5,11 +5,12 @@ import { ChatMessage } from '../../models/chat-message';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { HeaderComponent } from '../../../shared/components/header/header.component';
 
 @Component({
   selector: 'app-new-chat',
   standalone: true,
-  imports: [RouterOutlet, FormsModule, CommonModule, RouterLink],
+  imports: [RouterOutlet, FormsModule, CommonModule, RouterLink, HeaderComponent],
   templateUrl: './new-chat.component.html',
   styleUrl: './new-chat.component.css',
 })

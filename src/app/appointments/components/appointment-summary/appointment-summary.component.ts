@@ -8,7 +8,7 @@ import { HeaderComponent } from '../../../shared/components/header/header.compon
 @Component({
   selector: 'app-appointment-summary',
   standalone: true,
-  imports: [CommonModule , HeaderComponent],
+  imports: [CommonModule, HeaderComponent],
   templateUrl: './appointment-summary.component.html',
   styleUrl: './appointment-summary.component.css',
 })
@@ -16,14 +16,14 @@ export class AppointmentSummaryComponent {
   count: AppointmentSummary = new AppointmentSummary();
 
 
-  constructor(private service: DashboardService ,    private router:ActivatedRoute,
-    ) {}
+  constructor(private service: DashboardService, private router: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
     this.router.queryParams.subscribe(params => {
       this.id = params['id'];
     })
-    
+
     this.getAppointmentSummary();
   }
 

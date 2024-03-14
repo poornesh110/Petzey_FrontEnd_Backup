@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { PetServiceService } from '../../../pets/service/pet-service.service';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
+import { Pet } from '../../../pets/models/pet';
 
 @Component({
   selector: 'app-all-pets',
@@ -12,10 +13,10 @@ import { HeaderComponent } from '../../../shared/components/header/header.compon
   styleUrl: './all-pets.component.css',
 })
 export class AllPetsComponent {
-  AllPets: any;
-  vetId: any;
-  role: any;
-  petid: any;
+  AllPets: Pet[] = [];
+  vetId: number = 0;
+  role: string = '';
+  petid: number = 0;
   constructor(
     private petService: PetServiceService,
     private route: ActivatedRoute

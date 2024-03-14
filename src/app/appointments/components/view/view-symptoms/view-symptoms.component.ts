@@ -13,11 +13,11 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './view-symptoms.component.css'
 })
 export class ViewSymptomsComponent {
-  constructor(private appointmentService: AppointmentService,private rt:ActivatedRoute) {
+  constructor(private appointmentService: AppointmentService, private rt: ActivatedRoute) {
 
   }
   symptoms: Symptoms[] = [];
-  id:number=0;
+  id: number = 0;
   appointmentdetails: Appointment = new Appointment();
 
   ngOnInit() {
