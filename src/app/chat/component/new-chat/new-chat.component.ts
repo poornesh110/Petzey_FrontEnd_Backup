@@ -11,16 +11,16 @@ import { HttpClient } from '@angular/common/http';
   standalone: true,
   imports: [RouterOutlet, FormsModule, CommonModule, RouterLink],
   templateUrl: './new-chat.component.html',
-  styleUrl: './new-chat.component.css'
+  styleUrl: './new-chat.component.css',
 })
 export class NewChatComponent {
   vetName: string = '';
-  name : string ='';
+  name: string = '';
   messageInput: string = '';
   userId: string = '';
   messageList: any[] = [];
   currentTime: string = '';
- 
+
   constructor(
     private chatService: ChatService,
     private route: ActivatedRoute,
@@ -28,23 +28,22 @@ export class NewChatComponent {
   ) {
     console.log(this.messageList);
   }
- 
+
   ngOnInit() {
     this.userId = this.route.snapshot.params['userId'];
     this.chatService.joinRoom('petzy');
     this.lisenerMessage();
-   
+
     this.route.queryParams.subscribe((params) => {
       this.vetName = params['name'];
       console.log(this.vetName);
- 
       console.log('vet Working');
     });
- 
+
     this.route.queryParams.subscribe((params) => {
       this.name = params['name'];
       console.log(this.name);
- 
+
       console.log('pet working');
     });
   }
@@ -54,14 +53,14 @@ export class NewChatComponent {
   }
   sendMessage() {
     const chatMessage = {
-      message: this.messageInput,
+      message: this.messageInput + ' ~ ' + this.name,
       user: this.userId,
       currenthour: this.getCurrentTime(),
     } as unknown as ChatMessage;
     this.chatService.sendMessage('petzy', chatMessage);
     this.messageInput = '';
   }
- 
+
   lisenerMessage() {
     this.chatService.getMessageSubject().subscribe((messages: any) => {
       this.messageList = messages.map((item: any) => ({
@@ -70,7 +69,7 @@ export class NewChatComponent {
       }));
     });
   }
- 
+
   updatedDate: any;
   updateDate() {
     var today = new Date();

@@ -11,37 +11,69 @@
     </div>
 
     <div class="card-body">
-      <div class="row">
-        Email:<input type="email" name="username" [(ngModel)]="userI.email" />
-      </div>
-      <br />
-      <div class="row">
-        Password:<input type="password" name="password" [(ngModel)]="userI.password" />
-      </div>
-      <br />
-      <div class="row">
-        Username:<input type="text" name="username" #uname [(ngModel)]="user.name" />
-      </div>
-      <br />
-      <div class="row">
+      <form id="appointment-form" #userForm="ngForm">
+        <div class="row">
+          <label for="email">Email:</label>
+          <!-- <input type="email" id="email" name="email" [(ngModel)]="email" /> -->
+          <input type="email" #refemail="ngModel" name="email" onfocus="(this.type='email')" [(ngModel)]="userI.email"
+            required onblur="if(!this.value) this.type='email'" ngModel (input)="userI.email">
+          <!-- <div *ngIf="refemail.errors && (refemail.dirty || refemail.touched)" class="alert alert-danger" style="background-color: rgb(255, 204, 191); width:320px;height:30px; padding:0px !important; margin-bottom:0px !important;"> -->
+          <div *ngIf="refemail.errors && (refemail.dirty || refemail.touched)" style="padding: 0px;">
+            <div [hidden]="!refemail.errors" style="position: relative; left:5px !important;">
+              <small style="color: red; padding:0px;">Email is Required and should be in the form of
+                "john&#x0040;gmail.com"</small>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          Password:
+          <!-- <input type="password" name="password" [(ngModel)]="userI.password" /> -->
+          <input type="password" #vpassword="ngModel" name="password" onfocus="(this.type='password')"
+            [(ngModel)]="userI.password" required onblur="if(!this.value) this.type='password'" ngModel
+            (input)="userI.password">
+          <!-- <div *ngIf="vpassword.errors && (vpassword.dirty || vpassword.touched)" class="alert alert-danger" style="background-color: rgb(255, 204, 191); width:320px;height:30px; padding:0px !important; margin-bottom:0px !important;"> -->
+          <div *ngIf="vpassword.errors && (vpassword.dirty || vpassword.touched)" style="padding: 0px;">
+            <div [hidden]="!vpassword.errors" style="position: relative; left:5px !important;">
+              <small style="color: red;">Password should have minimum 8 characters</small>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          Username:
+          <!-- <input type="text" name="username" #uname [(ngModel)]="user.name" /> -->
+          <input type="text" #vusername="ngModel" name="username" onfocus="(this.type='text')" [(ngModel)]="user.name"
+            required onblur="if(!this.value) this.type='text'" ngModel (input)="user.name">
+          <!-- <div *ngIf="vusername.errors && (vusername.dirty || vusername.touched)" class="alert alert-danger" style="background-color: rgb(255, 204, 191); width:320px;height:30px; padding:0px !important; margin-bottom:0px !important;"> -->
+          <div *ngIf="vusername.errors && (vusername.dirty || vusername.touched)" style="padding: 0px;">
+            <div [hidden]="!vusername.errors" style="position: relative; left:5px !important;">
+              <small style="color: red;">Username is Required</small>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
 
-        Role:<select name="Role" id="Role" #role [(ngModel)]="user.role">
-          <option value="" disabled selected>Select a role</option>
-          <option value="Vet">Vet</option>
-          <option value="PetOwner">PetOwner</option>
-        </select>
-      </div>
-      <div class="row"></div>
-      <br />
+          Role:<select name="Role" id="Role" #role [(ngModel)]="user.role">
+            <option value="" disabled selected>Select a role</option>
+            <option value="Vet">Vet</option>
+            <option value="PetOwner">PetOwner</option>
+          </select>
+        </div>
+        <div class="row"></div>
+        <br />
 
-      <div class="row">
+        <div class="row">
 
-        <button (click)="signUp()" class="btn btn-outline-success">
-          Sign Up
-        </button>
-      </div>
+          <button (click)="signUp()" class="btn btn-outline-success">
+            Sign Up
+          </button>
+        </div>
+      </form>
 
     </div>
+    <!-- </form> -->
   </div>
 
   <div class="card" *ngIf="isConfirm">

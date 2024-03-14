@@ -1,19 +1,13 @@
+<app-header></app-header>
 <div>
   <div class="container parent">
     <div class="head">
-      <p style="font-weight: bold;font-style: normal;font-size: large;" >Account Details</p>
+      <p style="font-weight: bold;font-style: normal;font-size: large;">Account Details</p>
       <p class="para">
         Manage your team members and their account permissions here.
       </p>
-      <button
-        type="button"
-        class="btn btn-danger edit float-right some-other-class"
-        id="button"
-        data-toggle="modal"
-        data-target="#exampleModal"
-        (click)="openForm()"
-        style="margin-right: 20px;margin-top: 30px;"
-      >
+      <button type="button" class="btn btn-danger edit float-right some-other-class" id="button" data-toggle="modal"
+        data-target="#exampleModal" (click)="openForm()" style="margin-right: 20px;margin-top: 30px;">
         Edit
       </button>
     </div>
@@ -22,89 +16,61 @@
       <div class="card c">
         <div class="card-body d-flex align-items-center">
           <div class="me-4">
-            <img
-              src="{{PetParent.imageURL}}"
-              alt="Profile Image"
-              class="rounded-circle"
-              style="width: 100px; height: 100px;border-radius: 100px;margin-top: -15px;"
-            />
+            <img src="{{PetParent.imageURL}}" alt="Profile Image" class="rounded-circle"
+              style="width: 100px; height: 100px;border-radius: 100px;margin-top: -15px;" />
           </div>
           <div class="flex-grow-1">
             <p class="card-text1" style="color: grey;">
               Name <span style="margin-left: 42px;">:</span>
-              <span class="card-text" style="margin-left: 20px;color: black;font-weight: bold;">{{ PetParent.petParentName }}</span>
+              <span class="card-text" style="margin-left: 20px;color: black;font-weight: bold;">{{
+                PetParent.petParentName }}</span>
             </p>
-            <p class="card-text1"style="color: grey;">
-              Mobile <span style="margin-left: 34px;">:</span> <span class="card-text" style="margin-left: 20px;color: black;font-weight: bold;">{{ PetParent.phoneNumber }}</span>
+            <p class="card-text1" style="color: grey;">
+              Mobile <span style="margin-left: 34px;">:</span> <span class="card-text"
+                style="margin-left: 20px;color: black;font-weight: bold;">{{ PetParent.phoneNumber }}</span>
             </p>
-            <p class="card-text1"style="color: grey;">
-              Location <span style="margin-left: 15px;">:</span> <span class="card-text"style="margin-left: 20px;color: black;font-weight: bold;">{{ PetParent.address }}</span>
+            <p class="card-text1" style="color: grey;">
+              Location <span style="margin-left: 15px;">:</span> <span class="card-text"
+                style="margin-left: 20px;color: black;font-weight: bold;">{{ PetParent.address }}</span>
             </p>
           </div>
         </div>
       </div>
     </div>
- 
+
     <div class="container pet1">
       <div class="head">
-        <p  style="font-weight: bold;font-size: large;font-style: normal;margin-top: 30px;margin-left: 15px;">Pet Details</p>
+        <p style="font-weight: bold;font-size: large;font-style: normal;margin-top: 30px;margin-left: 15px;">Pet Details
+        </p>
         <p class="para px-4" style="margin-left: -7px;">Manage your pets here.</p>
-        <button
-          mat-raised-button
-          class="btn btn-danger float-right"
-          id="button"
-          data-toggle="modal"
-          data-target="#newpet"
-          style="margin-right: 20px;margin-top: 30px;"
-        >
+        <button mat-raised-button class="btn btn-danger float-right" id="button" data-toggle="modal"
+          data-target="#newpet" style="margin-right: 20px;margin-top: 30px;">
           + New Pet
         </button>
       </div>
       <hr />
       <div class="" style="gap: 16px">
-        <div
-          class="scroll-container d-flex "
-          style="overflow: auto; gap: 32px"
-        >
+        <div class="scroll-container d-flex " style="overflow: auto; gap: 32px">
           <div *ngFor="let items of getpetsbasedonparentid">
             <div class="card" style="width: max-content">
-              <mat-card-content
-                routerLink="/pets/viewpet"
-                [queryParams]="{
-                  petName: items.petName,
-                  age: items.age,
-                  bloodGroup: items.bloodGroup,
-                  dateOfBirth: items.dateOfBirth,
-                  gender: items.gender,
-                  imageURL:items.imageURL,
-                }"
-              >
+              <mat-card-content routerLink="/dashboard/viewpet"
+                [queryParams]="{ id: petParentId, role: role,  petId:items.petParent.petParentId}">
                 <div class="card-body d-flex align-items-center">
                   <div class="me-4">
-                    <img
-                      src="{{items.imageURL}}"
-                      alt="Profile Image"
-                      class="rounded-circle"
-                      style="width: 100px; height: 100px;border-radius: 100px;"
-                    />
+                    <img src="{{items.imageURL}}" alt="Profile Image" class="rounded-circle"
+                      style="width: 100px; height: 100px;border-radius: 100px;" />
                   </div>
                   <div class="flex-grow-1 element" style="margin-top: 20px;">
                     <p class="petp" style="text-decoration: none;color: black;">{{ items.petName }}</p>
-                    <p class="petdob"style="text-decoration: none;color: black;">
+                    <p class="petdob" style="text-decoration: none;color: black;">
                       {{ items.gender }},{{ items.age }} years
                     </p>
                   </div>
                 </div>
               </mat-card-content>
-              <button
-                type="button"
-                class="btn btn-danger edit float-right some-other-class"
-                id="button"
-                data-toggle="modal"
-                data-target="#editpet"
-                (click)="updatefetch(items.petId)"
-                style="margin-top: 4px;margin-right: 4px;"
-              >
+              <button type="button" class="btn btn-danger edit float-right some-other-class" id="button"
+                data-toggle="modal" data-target="#editpet" (click)="updatefetch(items.petId)"
+                style="margin-top: 4px;margin-right: 4px;">
                 edit
               </button>
             </div>
@@ -112,16 +78,9 @@
         </div>
       </div>
     </div>
- 
-    <div
-      class="modal fade popup"
-      id="exampleModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-      *ngIf="showForm"
-    >
+
+    <div class="modal fade popup" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true" *ngIf="showForm">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -130,94 +89,45 @@
           </div>
           <div class="modal-body">
             <div class="namegap">
-              <img
-                alt=""
-                src="{{putdata.imageURL}}"
-                class="rounded-circle"
-                style="width: 30%; height: 50%"
-              />
-            <br>
-              <span class="mx-4"
-                >Name:<input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="putdata.petParentName"
-                  name="petParentName"
-              /></span>
+              <img alt="" src="{{putdata.imageURL}}" class="rounded-circle" style="width: 30%; height: 50%" />
+              <br>
+              <span class="mx-4">Name:<input type="text" class="form-control" [(ngModel)]="putdata.petParentName"
+                  name="petParentName" /></span>
             </div>
             <br />
             <div class="gender">
               <label class="gen-label">Gender:</label>
-              <input
-                type="radio"
-                id="male"
-                value="Mr"
-                [(ngModel)]="putdata.gender"
-                name="gender"
-              />
+              <input type="radio" id="male" value="Mr" [(ngModel)]="putdata.gender" name="gender" />
               Mr
-              <input
-                type="radio"
-                id="female"
-                value="Mrs"
-                [(ngModel)]="putdata.gender"
-                name="gender"
-              />
+              <input type="radio" id="female" value="Mrs" [(ngModel)]="putdata.gender" name="gender" />
               Mrs
             </div>
             <br />
             <div>
               <label for="">Mobile:</label>
-              <input
-                type="number"
-                class="form-control"
-                [(ngModel)]="putdata.phoneNumber"
-                name="phoneNumber"
-              />
+              <input type="number" class="form-control" [(ngModel)]="putdata.phoneNumber" name="phoneNumber" />
             </div>
             <br />
             <div>
               <label>Location</label>
-              <textarea
-                class="form-control"
-                rows="3"
-                cols="30"
-                class="form-control"
-                [(ngModel)]="putdata.address"
-                name="address"
-              ></textarea>
+              <textarea class="form-control" rows="3" cols="30" class="form-control" [(ngModel)]="putdata.address"
+                name="address"></textarea>
             </div>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-              (click)="closeForm()"
-            >
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeForm()">
               Cancel
             </button>
-            <button
-              type="button"
-              class="btn btn-danger"
-              (click)="updatdePetparent($event)"
-              data-dismiss="modal"
-            >
+            <button type="button" class="btn btn-danger" (click)="updatdePetparent($event)" data-dismiss="modal">
               Confirm
             </button>
           </div>
         </div>
       </div>
     </div>
- 
-    <div
-      class="modal fade popupforadd"
-      id="newpet"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+
+    <div class="modal fade popupforadd" id="newpet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -226,78 +136,41 @@
           </div>
           <div class="len modal-body">
             <div class="namegap">
-              <img
-                alt=""
-                src="{{petinfo.imageURL}}"
-                class="rounded-circle"
-                style="width: 30%; height: 50%"
-              /> <input
-              type="file"
-              [(ngModel)]="petinfo.imageURL"
-            />
-         
-              
+              <img alt="" src="{{petinfo.imageURL}}" class="rounded-circle" style="width: 30%; height: 50%" /> <input
+                type="file" [(ngModel)]="petinfo.imageURL" />
+
+
             </div>
             <br />
 
             <div>
               <label for="">Name</label>
-           
-              <input
-                type="text"
-               
-                name="name"
-                class="mx-2"
-                [(ngModel)]="petinfo.petName"
-              />
+
+              <input type="text" name="name" class="mx-2" [(ngModel)]="petinfo.petName" />
             </div>
 
- 
+
             <div>
               <label for="">Species</label>
               <br />
               <label for="dog" class="mx-2">Dog:</label>
-              <input
-                type="radio"
-                id="dog"
-                name="petspce"
-                value="Dog"
-                [(ngModel)]="petinfo.breed"
-              />
- 
+              <input type="radio" id="dog" name="petspce" value="Dog" [(ngModel)]="petinfo.breed" />
+
               <label for="cat" class="mx-lg-3">Cat:</label>
-              <input
-                type="radio"
-                id="cat"
-                name="petspce"
-                value="Cat"
-                [(ngModel)]="petinfo.breed"
-              />
+              <input type="radio" id="cat" name="petspce" value="Cat" [(ngModel)]="petinfo.breed" />
             </div>
- 
+
             <br />
             <div>
               <label for="">Gender</label>
               <br />
               <label for="male" class="mx-2">Male:</label>
-              <input
-                type="radio"
-                id="male"
-                name="petGender"
-                value="Male"
-                [(ngModel)]="petinfo.gender"
-              />
- 
+              <input type="radio" id="male" name="petGender" value="Male" [(ngModel)]="petinfo.gender" />
+
               <label for="female" class="mx-2">Female:</label>
-              <input
-                type="radio"
-                id="female"
-                name="petGender"
-                value="Female"
-                [(ngModel)]="petinfo.gender"
-              />
+              <input type="radio" id="female" name="petGender" value="Female" [(ngModel)]="petinfo.gender" />
             </div>
- 
+
             <br />
             <div>
               <label for="dateof"></label>dateofbirth
@@ -305,23 +178,14 @@
                 >Age</label
               > -->
               <br />
-              <input
-                type="date"
-                id="dateof"
-                [(ngModel)]="petinfo.dateOfBirth"
-                (focus)="disableFutureDates()"
-              />
-              
-              <input
-                type="number"
-                id="age"
-                class="f mx-2"
-                [(ngModel)]="petinfo.age"
-              /> 
-              
+              <input type="date" id="dateof" [(ngModel)]="petinfo.dateOfBirth" max="{{getMaxDate()}}"
+                (ngModelChange)="newAge()" />
+
+              <input type="number" id="age" class="f mx-2" [(ngModel)]="petinfo.age" disabled />
+
             </div>
             <br />
-            
+
             <div class="form-control">
               <label for="blood">Blood group</label>
               <br />
@@ -330,41 +194,22 @@
             <div class="form-control">
               <label for="allergies">Allergies</label>
               <br />
-              <input
-                type="text"
-                id="allergies"
-                [(ngModel)]="petinfo.allergies"
-              />
+              <input type="text" id="allergies" [(ngModel)]="petinfo.allergies" />
             </div>
- 
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
               Cancel
             </button>
-            <button
-              class="btn btn-danger"
-              type="submit"
-              (click)="addPet()"
-              data-dismiss="modal"
-            >
+            <button class="btn btn-danger" type="submit" (click)="addPet()" data-dismiss="modal">
               Confirm
             </button>
           </div>
         </div>
       </div>
     </div>
- 
-    <div
-      class="modal fade popupforadd"
-      id="editpet"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+
+    <div class="modal fade popupforadd" id="editpet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -373,52 +218,31 @@
           </div>
           <div class="len modal-body">
             <div class="namegap">
-              <img
-                alt=""
-                src="{{jdata.imageURL}}"
-                class="rounded-circle"
-                style="width: 30%; height: 50%"
-              />
-            
+              <img alt="" src="{{jdata.imageURL}}" class="rounded-circle" style="width: 30%; height: 50%" />
+
             </div>
             <br />
-           
+
 
             <div>
               <label for="">Name</label>
-           
-              <input
-                type="text"
-               
-                name="name"
-                class="mx-2"
-                [(ngModel)]="jdata.petName"
-              />
+
+              <input type="text" name="name" class="mx-2" [(ngModel)]="jdata.petName" />
             </div>
-         
+
             <br />
             <div class="Species">
               <label for="">Species</label>
               <br />
-             
-              <input
-                type="radio"
-                id="dog"
-                value="Dog"
-                [(ngModel)]="jdata.breed"
-              />
+
+              <input type="radio" id="dog" value="Dog" [(ngModel)]="jdata.breed" />
               Dog
-             
-              <input
-              type="radio"
-              id="cat"
-              value="Cat"
-              [(ngModel)]="jdata.breed"
-            />
-            Cat
+
+              <input type="radio" id="cat" value="Cat" [(ngModel)]="jdata.breed" />
+              Cat
             </div>
- 
-        
+
+
 
 
 
@@ -426,46 +250,24 @@
             <div>
               <label for="">Gender</label>
               <br />
-              
-              <input
-                type="radio"
-                id="male"
-                name="petGender"
-                value="Male"
-                [(ngModel)]="jdata.gender"
-              />Male
- 
-              
-              <input
-                type="radio"
-                id="female"
-                name="petGender"
-                value="Female"
-                [(ngModel)]="jdata.gender"
-              />Female
+
+              <input type="radio" id="male" name="petGender" value="Male" [(ngModel)]="jdata.gender" />Male
+
+
+              <input type="radio" id="female" name="petGender" value="Female" [(ngModel)]="jdata.gender" />Female
             </div>
- 
+
             <br />
             <div>
               <label for="dateof"></label>dateofbirth
-              <label for="age" class="orm-control mx-5" style="left: 50px"
-                >Age</label>
-              
+              <label for="age" class="orm-control mx-5" style="left: 50px">Age</label>
+
               <br />
-              <input
-                type="date"
-                id="dateof"
-                [(ngModel)]="petinfo.dateOfBirth"
-                (focus)="disableFutureDates()"
-              />
-              <input
-                type="number"
-                id="age"
-                class="f mx-2"
-                [(ngModel)]="jdata.age"
-              />
+              <input type="date" id="dateof" [(ngModel)]="jdata.dateOfBirth" max="{{getMaxDate()}}"
+                (ngModelChange)="updateAge()" />
+              <input type="number" id="age" class="f mx-2" [(ngModel)]="jdata.age" disabled />
               <!-- <p >Age:{{calculateAge()}}years</p> -->
-              
+
 
             </div>
             <br />
@@ -479,20 +281,11 @@
               <br />
               <input type="text" id="allergies" [(ngModel)]="jdata.allergies" />
             </div>
- 
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
               Cancel
             </button>
-            <button
-              class="btn btn-danger"
-              type="submit"
-              data-dismiss="modal"
-              (click)="updatdePet($event)"
-            >
+            <button class="btn btn-danger" type="submit" data-dismiss="modal" (click)="updatdePet($event)">
               Confirm
             </button>
           </div>

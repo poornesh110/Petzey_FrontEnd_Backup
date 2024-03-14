@@ -1,10 +1,9 @@
 <div style="width: 80%;margin-left: 300px;">
-    <button routerLink="/dashboard/all-pets"> &larr; Back to all pets </button>
     <div class="container d-flex">
         <div class="col  " style="padding: 16px;">
             <div class=" d-flex" style="padding: 16px;">
 
-                <img src="{{petImage}}" width="100px" height="100px" style="padding: 0px; border-radius: 50%;" />
+                <img src="{{petImage}}" width="100px" height="100px" style="padding: 0px;" />
 
                 <div class="pet-info">
                     <div class="patient" style="padding-left:32px;">
@@ -30,7 +29,7 @@
             <div class="card">
                 <div class="profile-pic " id="pic">
                     <div class="profile-pic-container d-flex ">
-                        <img src="assets/images/Ellipse 1.png" id="output" width="100px" height="100px" />
+                        <img src="{{petparent.imageURL}}" id="output" width="100px" height="100px" />
                         <div class="parent" style="padding: 26px;">
                             <p>Pet Owner</p>
                             <p><b>{{petparent.petParentName}}</b></p>
@@ -41,13 +40,13 @@
 
                 </div>
                 <div class="info" style="margin-top: 16px">
-                    <p class="text"><i class="fa-regular fa-envelope"></i> {{petparent.email}} </p>
+                    <p class="text"><i class="fa-regular fa-envelope"></i>{{petparent.email}} </p>
                     <p class="text"><i class="fa-solid fa-phone"></i> {{petparent.phoneNumber}}</p>
                     <p class="text"> <i class="fa-solid fa-house"></i> {{petparent.address}}</p>
                 </div>
 
             </div>
-            <a routerLink="/dashboard/newAppointment">
+            <a routerLink="/pets/newappointment">
                 <button class="book-appointment">Book Appointment</button>
             </a>
         </div>
@@ -104,4 +103,3 @@
     </div>
     </div>
   </div> -->
-<router-outlet></router-outlet>

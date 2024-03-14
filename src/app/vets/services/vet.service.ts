@@ -24,7 +24,7 @@ export class VetService {
   constructor(private http: HttpClient) { }
 
   getAllVets(): Observable<Vet[]> {
-    return this.http.get<Vet[]>(`${this.vetsApi}get`)
+    return this.http.get<Vet[]>(`${this.vetsApi}/get`)
   }
 
   getClinicByVetId(id: number): Observable<Clinic> {
@@ -60,10 +60,6 @@ export class VetService {
 
   getAppointmentHistory(vetId: number): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(`${this.appointmentApi}/getallByVet/${vetId}`)
-  }
-
-  updateClinicDetails(vetId: number, clinic: Clinic) {
-    return this.http.post(`${this.vetsApi}`, clinic);
   }
 
 }

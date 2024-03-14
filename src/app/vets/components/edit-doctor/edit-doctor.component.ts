@@ -5,41 +5,46 @@ import { Vet } from '../../models/vet';
 import { VetService } from '../../services/vet.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { ClinicService } from '../../../shared/services/clinic/clinic.service';
 
 @Component({
   selector: 'app-edit-doctor',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule, FormsModule],
+  imports: [RouterOutlet, RouterLink, CommonModule, FormsModule, HeaderComponent],
   templateUrl: './edit-doctor.component.html',
   styleUrl: './edit-doctor.component.css'
 })
 export class EditDoctorComponent {
-
   clinic = new Clinic()
   vetData = new Vet();
 
-  vetId: any;
+  role: string = ''
+  userID: number = -1;
 
   constructor(private vetService: VetService, private clinicService: ClinicService, private router: Router, private route: ActivatedRoute) { }
   ngOnInit() {
-    this.vetId = this.route.snapshot.paramMap.get('id')
+    this.route.queryParams.subscribe(params => {
+      this.role = params['role'];
+      this.userID = params['id']
+      console.log(this.role, this.userID)
+    })
+    // this.userID = this.route.snapshot.paramMap.get('id')
     this.getVet();
-    this.getVetClinicDetails(this.vetId);
+    this.getVetClinicDetails(this.userID);
   }
 
   getVet() {
-    this.vetService.getVetDetails(this.vetId).subscribe(data => this.vetData = data);
+    this.vetService.getVetDetails(this.userID).subscribe(data => this.vetData = data);
   }
 
   getVetClinicDetails(vetId: number) {
-    this.clinicService.getClinicDetailsByVetId(vetId).subscribe(data => this.clinic = data);
+    this.clinicService.getClinicDetailsByVetId(this.userID).subscribe(data => this.clinic = data);
   }
 
   updateDetails() {
-    this.vetService.editVetDetails(this.vetId, this.vetData).subscribe(data => this.vetData = data);
-    // this.vetService.updateClinicDetails(this.vetId, this.clinic).subscribe(data => this.clinic = data);
+    this.vetService.editVetDetails(this.userID, this.vetData).subscribe(data => this.vetData = data);
     alert("Updated Successfully")
-    this.router.navigate(['/dashboard/profilevet']);
+    this.router.navigate(['/dashboard']);
   }
 }

@@ -1,3 +1,4 @@
+
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Pet } from '../models/pet';
@@ -6,15 +7,30 @@ import { PetParent } from '../models/pet_parent';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { Appointment } from '../../appointments/models/appointment';
 import { Vet } from '../../vets/models/vet';
-import { vets } from '../models/vetdata';
+import { creds } from '../../authentication/models/login';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PetServiceService {
+
+  c: creds = new creds();
+  petparentId = this.c.userid;
   petURL = environment.PetURL;
+  appointmenturl = environment.getAllapiUrl;
+  veturl = environment.vet;
   constructor(private http: HttpClient) { }
 
+  getHighlyRated() {
+    return this.http.get(this.veturl + `get`)
+  }
+  getAllVets() {
+    return this.http.get(this.veturl + `getHighlyRated`)
+  }
+
+  getpetByParent(parentId: number) {
+    return this.http.get(this.petURL + `/getpetByParentId/${parentId}`)
+  }
   addPet(parentId: number, newPet: any) {
     console.log('inside service add pet');
     console.log(newPet);
@@ -35,11 +51,11 @@ export class PetServiceService {
   }
 
   public getParentbyId(id: number) {
-    return this.http.get(this.petURL + `getParentByID/${id}`);
+    return this.http.get(this.petURL + `/getParentByID/${id}`);
   }
 
   getPetList() {
-    return this.http.get(`${this.petURL}getAll`);
+    return this.http.get(`${this.petURL}/getAll`);
   }
 
   public removePetz(PetData: Pet) {
@@ -47,16 +63,15 @@ export class PetServiceService {
   }
 
   getAllAppointments(id: number): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>(
-      `https://appointmentservice.bt.skillassure.com/appointment/getallAppointmentByParentId/${id}`
-    );
+    return this.http.get<Appointment[]>
+      (this.appointmenturl + `/getallAppointmentByParentId/${id}`);
   }
 
-  getVetById(id: number): Observable<vets> {
+  getVetById(id: number): Observable<Vet> {
     return this.http
-      .get(` https://apigateway.bt.skillassure.com/Vet/api/vet/${id}`)
+      .get(this.veturl + `/api/vet/${id}`)
       .pipe(
-        map((response) => response as vets),
+        map((response) => response as Vet),
         catchError((error) => {
           console.error('Error fetching vet:', error);
           return throwError(error);

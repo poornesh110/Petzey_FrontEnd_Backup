@@ -5,7 +5,7 @@
         <div id="column" id="patient">
           <div id="row" id="profilephoto">
             <div id="column" id="photo">
-              <img src="assets/images/pet.jpg" alt="Pet Profile Photo">
+              <img src="{{pet.imageURL}}" alt="Pet Profile Photo">
             </div>
             <div id="column" id="details">
               <p id="small-text">Patient</p>
@@ -25,7 +25,7 @@
         <div id="column" id="owner">
           <div id="row" id="profilephoto">
             <div id="column" id="photo">
-              <img style="background-color:#D1DFC3" src="assets/images/petParent.png" alt="Pet Owner Photo">
+              <img style="background-color:#D1DFC3" src="{{petParent.imageURL}}" alt="Pet Owner Photo">
             </div>
             <div id="column" id="details">
               <p id="small-text">Pet Owner</p>
@@ -45,7 +45,7 @@
     <div id="card table" id="doctor">
       <div id="profile row" id="profilephoto">
         <div id="profile-photo column" id="photo">
-          <img src="assets/images/vet.jpg" alt="Vet Profile Photo">
+          <img src="{{vet.imageURL}}" alt="Vet Profile Photo">
         </div>
         <div id="column" id="details">
           <p id="small-text">Doctor</p>

@@ -4,7 +4,7 @@ import { VetAppointmentService } from '../../services/vet-appointment.service';
 import { Pet } from '../../../pets/models/pet';
 import { PetParent } from '../../../pets/models/pet_parent';
 import { CommonModule } from '@angular/common';
-
+ 
 @Component({
   selector: 'app-appointment-history',
   standalone: true,
@@ -30,7 +30,7 @@ export class AppointmentHistoryComponent {
   petNames: String[] = [];
   appointmentDate: String = '2024-03-05';
   petparentlist: [] = [];
-
+ 
   constructor(public loginService: VetAppointmentService, private route: ActivatedRoute) { }
   ngOnInit() {
     this.loginService.getAppointments(this.vetid).subscribe((results) => {
@@ -39,8 +39,8 @@ export class AppointmentHistoryComponent {
       this.posts = results;
       this.items.petid = this.petsid;
       this.items.petParentId = this.petParentId;
-
-
+ 
+ 
       this.items.forEach((app: { petParentId: number; }) => {
         this.loginService.getPetParentById(app.petParentId).subscribe((petParentName) => {
           // this.petParentNames[app.petParentId] = petParentName;
@@ -54,21 +54,22 @@ export class AppointmentHistoryComponent {
       });
       console.log(this.petNames);
     });
-
-
+ 
+ 
     // this.items.petparentname=
     // this.appointment.date=this.appointmentDate
-
-
+ 
+ 
     this.loginService.getPetById(this.petsid).subscribe((petName) => {
-
+ 
       console.log(petName);
       return petName;
     });
     this.loginService.getPetParentById(this.petParentId).subscribe((petParentName) => {
-
+ 
       console.log(petParentName);
       return petParentName;
     });
   }
 }
+ 

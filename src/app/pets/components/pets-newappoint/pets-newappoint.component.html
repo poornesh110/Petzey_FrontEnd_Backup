@@ -1,6 +1,7 @@
+<app-header></app-header>
+
 <div style="margin-left: 300px;">
-  <p class="backbtn" id="heading" routerLink="/pets/dashboard"> <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-    to
+  <p class="backbtn" id="heading" (click)="goBack()"> <i class="fa fa-arrow-left" aria-hidden="true"></i> Back to
     Appointments</p>
   <h2 id="heading">New Appointment</h2>
   <hr>
@@ -79,7 +80,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" data-bs-dismiss="modal" id="#exampleModal1" id="bookAppointment-btn"
-          routerLink="/pets/dashboard">Okay</button>
+          routerLink="/dashboard" [queryParams]="{ id: petParentId, role: role }">Okay</button>
       </div>
     </div>
   </div>

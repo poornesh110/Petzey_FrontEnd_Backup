@@ -3,13 +3,14 @@ import { error } from 'console';
 import { Pet } from '../../models/pet';
 import { PetParent } from '../../models/pet_parent';
 import { Vet } from '../../../vets/models/vet';
-
+import { Location } from '@angular/common';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Appointment } from '../../../appointments/models/appointment';
 import { AppointmentService } from '../../../appointments/services/appointment-service';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { FormBuilder, FormsModule, Validators } from '@angular/forms';
+import { HeaderComponent } from '../../../shared/components/header/header.component';
 
 @Component({
   selector: 'app-pets-newappoint',
@@ -20,6 +21,7 @@ import { FormBuilder, FormsModule, Validators } from '@angular/forms';
     NgIf,
     CommonModule,
     HttpClientModule,
+    HeaderComponent,
     FormsModule,
     NgFor
   ],
@@ -30,10 +32,10 @@ export class PetsNewappointComponent {
   errorMessage: string = '';
   appointmentForm: any;
   minDate: string = '';
-  petParentId: number = 1;
+  petParentId: number = -1;
   selectedPetId: number = 0;
   selectedVetId: number = 0;
-  selectedButton: string = '09:00';
+  selectedButton: string = '';
   newAppointment: Appointment = new Appointment();
   pets: Pet[] = [];
   petParent: PetParent = new PetParent();
@@ -41,12 +43,18 @@ export class PetsNewappointComponent {
   time: Date = new Date();
   vetSlotes: string[] = [];
   selectedButtonIndex: number | null = null;
-  constructor(private service: AppointmentService, private fb: FormBuilder) {
+  role: any;
+  constructor(private service: AppointmentService, private rt: Router, private location: Location, private fb: FormBuilder, private router: ActivatedRoute) {
     this.appointmentForm = this.fb.group({
       vetName: ['', Validators.required]
     });
     this.setMinDate();
   }
+
+  goBack() {
+    this.location.back()
+  }
+
   setMinDate(): void {
     const today = new Date();
     const month = today.getMonth() + 1;
@@ -68,6 +76,7 @@ export class PetsNewappointComponent {
     console.log(this.selectedPetId);
     console.log(this.selectedVetId);
   }
+
   getVetID(event: any) {
     this.selectedVetId = event.target.value;
     console.log(this.selectedVetId + "--" + this.time);
@@ -78,11 +87,15 @@ export class PetsNewappointComponent {
 
   getPetID(event: any) {
     this.selectedPetId = event.target.value;
-    console.log(this.selectedPetId);
-
   }
 
   ngOnInit(): void {
+
+    this.router.queryParams.subscribe(params => {
+      this.petParentId = params['id'];
+      this.role = params['role'];
+    })
+
     this.service.getPets(this.petParentId).subscribe((data) => {
       this.pets = data;
     });
@@ -95,23 +108,17 @@ export class PetsNewappointComponent {
   onSumbitForm(): void {
     this.newAppointment.appointmentDate = this.time;
     this.newAppointment.appointment_time = this.selectedButton;
-    console.log("petId" + this.selectedPetId);
 
-    this.service.updateVetSchedules(this.selectedVetId, `${this.time}`, this.selectedButton).subscribe(data => {
-    });
-    this.service
-      .addAppointment(
-        this.newAppointment,
-        this.selectedVetId,
-        1,
-        this.selectedPetId
-      )
-      .subscribe(
-        (data) => { },
-        (error) => {
-          this.errorMessage = error.message;
-        }
-      );
+    this.service.addAppointment(this.newAppointment, this.selectedVetId, 1, this.selectedPetId).subscribe((data) => {
+      console.log("deleted time:", this.selectedButton);
+      this.service.updateVetSchedules(this.selectedVetId, `${this.time}`, this.selectedButton).subscribe(data => {
+      });
+      alert("Appointment Scheduled Succesfully")
+    },
+      (error) => {
+        this.errorMessage = error.message;
+      }
+    );
   }
 
 
@@ -120,8 +127,14 @@ export class PetsNewappointComponent {
   }
 
   getVetSchedules(vetId: number, date: string) {
+    console.log(this.selectedVetId)
+    console.log(vetId);
     this.service.getVetSchedules(vetId, date).subscribe(data => {
       this.vetSlotes = data;
+      if (this.vetSlotes == null || this.vetSlotes.length == 0) {
+        alert("no slots available")
+      }
+      console.log(data)
     })
   }
 

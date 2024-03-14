@@ -34,11 +34,11 @@ export class BodyComponent {
   constructor(
     private service: DashboardService,
     private rt: Router,
-    private route: ActivatedRoute,
+    private route:ActivatedRoute,
     private cognitoservice: CognitoService,
     private petservice: PetServiceService,
-    private http: HttpClient,
-    private id: IdControllerService
+    private http:HttpClient,
+    private id:IdControllerService
 
   ) {
     this.currentUser = {} as IUser;
@@ -51,27 +51,27 @@ export class BodyComponent {
   allAppointment: Appointment[] = [];
 
   myObject: { [key: number]: any } = {};
-  myVetObject: { [key: number]: any } = {};
-  card: any;
-  appointmentId: number = 0;
-  ispet() {
-    return this.role == 'pet';
+  myVetObject:{[key:number]:any}={};
+  card:any;
+  userid:number=0;
+  ispet(){
+    return this.role=='pet';
   }
 
   isvet() {
     return this.role == 'vet';
   }
 
-  async ngOnInit() {
-    await this.getAllApointment();
 
+  async ngOnInit(){
+    await this.getAllApointment()
     await this.getmicroservicedata()
 
     this.route.params.subscribe(params => {
-      this.appointmentId = params['appointmentId'];
-      console.log('Appointment ID:', this.appointmentId);
+      this.userid = params['id'];
+      
     });
-
+  
   }
 
   petparentId: number = 1;
@@ -169,26 +169,13 @@ export class BodyComponent {
       },
     });
   }
-
-
-  // onSubmit() {
-  //   const appointmentId = 1;
-  //   this.service.submitFeedback(appointmentId, this.feedback).subscribe(
-  //     (response: any) => {
-  //       console.log('Feedback submitted successfully:', response);
-  //       this.resetForm();
-  //     },
-  //     (error: any) => {
-  //       console.error('Error submitting feedback:', error);
-
-  //     }
-  //   );
-  // }
+ 
+ 
   onSubmit() {
-    console.log('Submitting feedback for Appointment ID:', this.appointmentId);
-
-    if (this.appointmentId) {
-      this.service.submitFeedback(this.appointmentId, this.feedback).subscribe(
+    console.log('Submitting feedback for Appointment ID:', this.userid);
+ 
+    if (this.userid) {
+      this.service.submitFeedback(this.userid, this.feedback).subscribe(
         (response: any) => {
           console.log('Feedback submitted successfully', response);
           this.resetForm();
@@ -207,7 +194,7 @@ export class BodyComponent {
       );
     } else {
       console.error('Appointment ID is not found');
-      alert('Appointment ID is not found');
+      // alert('Appointment ID is not found');
     }
   }
 
@@ -265,15 +252,5 @@ export class BodyComponent {
       this.allAppointment.length / this.cardsPerPage
     );
     this.currentPage = totalPages;
-  }
-
-  navigate1(petOwnerName: string, petId: number) {
-    console.log(petOwnerName + '  ' + petId);
-
-    this.rt.navigate([`/chat/${petId}`], {
-      queryParams: {
-        name: petOwnerName,
-      },
-    });
   }
 }

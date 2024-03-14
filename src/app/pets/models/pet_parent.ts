@@ -12,7 +12,7 @@ export class PetParent{
     consultedVets: []=[];
     email: string="";
     password: string="";
+  petParent: any;
+  imageURL:string='';
 
-    
- 
 }

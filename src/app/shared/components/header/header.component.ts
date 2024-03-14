@@ -2,12 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
+  ActivatedRoute,
   NavigationEnd,
   Router,
   RouterEvent,
   RouterLink,
   RouterOutlet,
 } from '@angular/router';
+import { DashboardService } from '../../../appointments/services/dashboard_service/dashboard.service';
 
 @Component({
   selector: 'app-header',
@@ -23,6 +25,57 @@ export class HeaderComponent {
   petsbg: string = '';
   profileactiveColor: string = '#ffffff';
   profilebg: string = '';
+
+  constructor(private router: ActivatedRoute, private service: DashboardService) { }
+
+  role: String = '';
+  userName: String = ''
+  userID: number = -1
+
+  image: String = '../../../../assets/images/Ellipse 1dp.png'
+
+  ngOnInit() {
+    this.router.queryParams.subscribe(params => {
+      this.role = params['role'];
+      this.userID = params['id']
+      console.log(this.role, this.userID)
+    })
+
+    this.getUser()
+  }
+
+  isVet() {
+    return this.role == 'Vet';
+  }
+
+  getUser() {
+    try {
+      if (this.role == 'Vet') {
+        try {
+          this.service.getvetdetails(this.userID).subscribe((data) => {
+            this.userName = data.vetName;
+            this.image = data.imageURL
+            return data.vetName;
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      if (this.role == 'PetOwner') {
+        console.log('called')
+        this.service.getPetparentdetails(this.userID).subscribe((data) => {
+          console.log(data[0])
+          this.userName = data[0].petParent.petParentName;
+          this.image = data[0].petParent.imageURL;
+          return data[0].petParent.petParentName;
+        });
+      }
+    } catch (error) {
+      console.log(error);
+
+    }
+    console.log(this.userName)
+  }
 
   handleMenuItemClick(menuItem: string): void {
     this.resetMenuItems();

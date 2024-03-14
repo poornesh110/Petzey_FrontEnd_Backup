@@ -7,8 +7,8 @@ import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { Vet } from '../../../../vets/models/vet';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
- 
- 
+
+
 @Component({
   selector: 'app-view-appointment-details',
   standalone: true,
@@ -17,99 +17,105 @@ import { Router } from '@angular/router';
   styleUrl: './view-appointment-details.component.css'
 })
 export class ViewAppointmentDetailsComponent {
- 
- 
-  minDate:string=''
+
+
+
   isClosed: boolean = false
   isCancelled: boolean = false
   id: number = 0
+  role: string = '';
   constructor(
     private appointmentService: AppointmentService,
-     private rt: ActivatedRoute ,
-     private router:Router,
-     private location :Location) {
-      this.setMinDate()
-      }
- 
-     setMinDate(): void {
-      const today = new Date();
-      const month = today.getMonth() + 1;
-      const day = today.getDate();
-      const year = today.getFullYear();
-      this.minDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-    }
- 
+    private rt: ActivatedRoute,
+    private location: Location) { }
+
+
   onCall() {
     console.log('Call button clicked');
   }
- 
+
   onChat() {
     console.log('Chat button clicked');
   }
- 
+
   onClose() {
     console.log('Close button clicked');
   }
- 
+
   onCancel() {
     console.log('Cancel button clicked');
   }
- 
+
   onSubmit() {
     console.log("called")
   }
- 
+
   cancelSubmit() {
- 
-    // try {
-    //   this.appointmentService.cancel_appointment(this.id).subscribe(data => {
-    //     this.reloadPage();
-    //     alert('Appointment with Id  ' + this.id + " cancelled succesfully")
-    //   })
-    // } catch (error) {
-    //   this.reloadPage();
-    //   alert('Appointment with Id  ' + this.id + " cancelled succesfully")
-    // }
-    this.appointmentService.cancel_appointment(this.id).subscribe(response =>{
-      // console.log('Closed Successfully', response)
-       alert('Appointment with Id  '+this.id+" closed succesfully")
-     },
-     error => {
-       alert('Appointment with Id  '+this.id+" closed succesfully")
-     }
-    )
+    console.log(this.id);
+    try {
+      this.appointmentService.cancel_appointment(this.id).subscribe(data => {
+        // console.log(data);
+        // let errorDiv=document.getElementById('exampleModal3');
+        // console.log(errorDiv);
+        alert('Appointment with Id  ' + this.id + " cancelled succesfully")
+      })
+    } catch (error) {
+      alert('Appointment with Id  ' + this.id + " cancelled succesfully")
+      // let errorDiv=document.getElementById('exampleModal3');
+      // console.log(errorDiv);
+      // console.log(error);
+
+
+
+    }
   }
- 
+  // closeSubmit() {
+  //   try {
+  //     this.appointmentService.close_appointment(this.id).subscribe(data => {
+  //       alert("Appointment with Id  " + this.id + " closed succesfully")
+  //     })
+  //   }
+  //   catch (error) {
+  //     alert("Appointment with Id  " + this.id + " closed succesfully")
+  //   }
+  //   // this.appointmentService.close_appointment(this.id).subscribe(
+  //   //   response =>{
+  //   //    // console.log('Closed Successfully', response)
+  //   //     alert('Appointment with Id  '+this.id+" closed succesfully")
+  //   //   } ,
+  //   //   error => {
+  //   //     alert('Appointment with Id  '+this.id+" closed succesfully")
+  //   //   }
+  //   // );
+  // }
+
   closeSubmit() {
-    // try {
-    //   this.appointmentService.close_appointment(this.id).subscribe(data => {
-    //     this.reloadPage();
-    //     alert("Appointment with Id  " + this.id + " closed succesfully")
-    //   })
-    // }
-    // catch (error) {
-    //   this.reloadPage();
-    //   alert("Appointment with Id  " + this.id + " closed succesfully")
-    // }
-    this.appointmentService.close_appointment(this.id).subscribe(
-      response =>{
-       // console.log('Closed Successfully', response)
-        alert('Appointment with Id  '+this.id+" closed succesfully")
-      } ,
-      error => {
-        alert('Appointment with Id  '+this.id+" closed succesfully")
+    try {
+      const appointmentDate = new Date(this.appointment.appointmentDate);
+      const currentDate = new Date();
+
+      if (appointmentDate > currentDate) {
+        alert("Cannot close a future appointment");
+        return;
       }
-    );
+      this.appointmentService.close_appointment(this.id).subscribe(data => {
+        alert("Appointment with Id  " + this.id + " closed successfully");
+      });
+    } catch (error) {
+      alert("Error occurred while closing the appointment: ");
+    }
   }
- 
- 
+
+
+
   vets: Vet[] = []
   doctorName: string = ''
   appointment: Appointment = new Appointment
- 
+
   ngOnInit(): void {
     this.rt.queryParams.subscribe(params => {
       this.id = params['data'];
+      this.role = params['role'];
     })
     this.appointmentService.getAppointmentDetails(this.id).subscribe(data => {
       this.appointment = data
@@ -123,7 +129,7 @@ export class ViewAppointmentDetailsComponent {
     },
       (error) => {
         console.log(error);
- 
+
       })
     this.appointmentService.getAllVets().subscribe(data => {
       this.vets = data;
@@ -135,18 +141,18 @@ export class ViewAppointmentDetailsComponent {
     this.appointmentService.editAppointment(this.appointment).subscribe(data => {
       alert("update is completed")
       console.log(data);
- 
+
     },
       (error) => {
         // alert(error)
- 
+
       });
- 
+
     console.log(this.appointment.vetId = Number(this.doctorName));
   }
- 
+
   goBack() {
     this.location.back()
   }
- 
+
 }

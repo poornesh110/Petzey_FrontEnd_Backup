@@ -15,6 +15,7 @@ import { environment } from '../../../../../environments/environment';
 import { AppointmentService } from '../../../services/appointment-service';
 import { VitalsSymptomsComponent } from '../view-vitals/view-vitals.component';
 import { error } from 'node:console';
+import { HeaderComponent } from '../../../../shared/components/header/header.component';
 
 
 @Component({
@@ -23,7 +24,7 @@ import { error } from 'node:console';
   imports: [ViewAppointmentDetailsComponent,ViewPrescriptionComponent,RouterOutlet,ViewVitalsComponent,
             ViewSymptomsComponent,ViewTestsComponent,ViewRecommendedDoctorsComponent,ViewCommentsComponent,
             CloseAppointmentComponent,VitalsSymptomsComponent,
-            ViewVetComponent,ViewPetPetparentComponent],
+            ViewVetComponent,ViewPetPetparentComponent , HeaderComponent],
   templateUrl: './view-appointment.component.html',
   styleUrl: './view-appointment.component.css'
 })

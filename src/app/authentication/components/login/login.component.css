@@ -1,14 +1,13 @@
 .container {
   position: fixed;
-  width: 660px;
+  width: 380px;
   height: 1262px;
   top: 259px;
-  left: 990px;
-  display: grid;
+  left: 950px;
+  /* display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  grid-gap: 50px;
-
+  grid-gap: 50px; */
 }
 
 .xyz {
@@ -20,7 +19,6 @@
 }
 
 .xyz img {
-
   width: 600px;
   height: 600px;
   justify-content: center;
@@ -71,4 +69,18 @@
 
 .row1 {
   text-align: center;
+}
+
+.row {
+  width: 340px;
+  padding-left: 20px;
+}
+.card{
+  border: none;
+}
+.link-primary{
+  text-decoration: none;
+  padding-left: 0px !important;
+  color: #FF692E !important;
+
 }

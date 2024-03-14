@@ -38,6 +38,15 @@ export class SignUpComponent {
     //   console.log('Password does not meet the criteria');
     //   return;
     // }
+    if (!this.validateEmailFormat(this.userI.email)) {
+      alert('Email should be in the form of "john@gmail.com"');
+      return;
+    }
+ 
+    if (!this.validatePasswordLength(this.userI.password)) {
+      alert('Password should have a minimum of 8 characters, One capital character,One Special Character,One number.');
+      return;
+    }
     this.cognitoService
       .signup(this.userI)
       .then(() => {
@@ -107,4 +116,18 @@ export class SignUpComponent {
 
   //   return true;
   // }
+
+  private validateEmailFormat(email: string): boolean {
+    // Regular expression pattern for email validation
+    const emailPattern: RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(email);
+  }
+ 
+  private validatePasswordLength(password: string): boolean {
+    // Regex pattern for password validation
+    const passwordPattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*()])(?=.*[0-9]).{8,}$/;
+   
+    // Check if the password matches the pattern
+    return passwordPattern.test(password);
+  }
 }

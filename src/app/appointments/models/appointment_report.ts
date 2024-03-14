@@ -5,14 +5,14 @@ import { Vitals } from "../../shared/models/vitals"
 import { RecommendedDoctor } from "./recommendedDoctor"
 
 export class AppointmentReport {
-    reportId: number = 0
-    prescriptions: Prescription[] = []
-    vitals: Vitals = new Vitals
-    tests: Test[] = []
-    symptoms: Symptoms[] = []
-    recommendedDoctors: RecommendedDoctor[] = []
-    comments: string = ''
-    recommendedClinics: string[] = []
+    reportId: number=0
+    prescriptions: Prescription[]=[]
+    vitals: Vitals=new Vitals
+    tests: Test[]=[]
+    symptoms: Symptoms[]=[]
+    recommendedDoctors:RecommendedDoctor[]=[]
+    comments:string=''
+    
 
     // constructor(reportId: number,
     //     prescriptions: Prescription[],

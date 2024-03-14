@@ -1,10 +1,11 @@
+<app-header></app-header>
 <div style="width: 80%;margin-left: 300px;">
-  <div class="container d-flex" >
+  <div class="container d-flex">
     <div class="col  " style="padding: 16px;">
       <div class=" d-flex" style="padding: 16px;">
-        
-          <img src="{{imageURL}}" width="100px"  height="100px" style="padding: 0px;"/>
-       
+
+        <!-- <img src="{{imageURL}}" width="100px" height="100px" style="padding: 0px;" /> -->
+
         <div class="pet-info">
           <div class="patient" style="padding-left:32px;">
             <p class="text1">Patient</p>
@@ -15,40 +16,40 @@
       </div>
       <div class="patient-info">
         <!-- <div *ngFor="let pet of parentData"> -->
-        <p class="text1">Gender  :  <span class="text2">{{gender}}</span></p>
-        <p class="text1">Age  :  <span class="text2">{{age}} years</span></p>
-        <p class="text1">Blood Group  :  <span class="text2"> {{bloodgroup}}</span></p>
-        <p class="text1">Date of Birth  :   <span class="text2">{{dateofbirth}}</span></p>
+        <p class="text1">Gender : <span class="text2">{{gender}}</span></p>
+        <p class="text1">Age : <span class="text2">{{age}} years</span></p>
+        <p class="text1">Blood Group : <span class="text2"> {{bloodgroup}}</span></p>
+        <p class="text1">Date of Birth : <span class="text2">{{dateofbirth}}</span></p>
         <!-- </div> -->
       </div>
-      
+
     </div>
-    
+
     <div style="border: 1px solid gray; margin: 32px;"></div>
     <div class="col-sm  d-flex justify-content-between" style="padding: 32px;">
       <div class="card">
         <div class="profile-pic " id="pic">
           <div class="profile-pic-container d-flex ">
             <img src="{{petparent.imageURL}}" id="output" width="100px" height="100px" />
-            <div class="parent"  style="padding: 26px;">
-                <p>Pet Owner</p>
-                <p><b>{{petparent.petParentName}}</b></p>
+            <div class="parent" style="padding: 26px;">
+              <p>Pet Owner</p>
+              <p><b>{{petparent.petParentName}}</b></p>
             </div>
           </div>
         </div>
         <div class="pet-owner">
-          
+
         </div>
-          <div class="info" style="margin-top: 16px">
-            <p class="text"><i class="fa-regular fa-envelope"></i>{{petparent.email}}  </p>
-            <p class="text"><i class="fa-solid fa-phone"></i> {{petparent.phoneNumber}}</p>
-            <p class="text"> <i class="fa-solid fa-house"></i> {{petparent.address}}</p>
-          </div>            
-        
+        <div class="info" style="margin-top: 16px">
+          <p class="text"><i class="fa-regular fa-envelope"></i>{{petparent.email}} </p>
+          <p class="text"><i class="fa-solid fa-phone"></i> {{petparent.phoneNumber}}</p>
+          <p class="text"> <i class="fa-solid fa-house"></i> {{petparent.address}}</p>
+        </div>
+
       </div>
-      <a routerLink="/pets/newappointment">
+      <!-- <a routerLink="/pets/newappointment">
         <button class="book-appointment">Book Appointment</button>
-      </a>
+      </a> -->
     </div>
 
 

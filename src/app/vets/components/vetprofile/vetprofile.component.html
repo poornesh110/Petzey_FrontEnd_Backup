@@ -1,3 +1,5 @@
+<app-header></app-header>
+
 <div class="frame112">
   <div class="section-header">
     <div class="content">
@@ -10,14 +12,15 @@
         <div class="button03"></div>
         <div class="button02"></div>
         <div class="button01">
-          <button class="button-base" style="text-decoration: none; color: black;" (click) = "navigate()">Edit</button>
+          <button class="button-base" style="text-decoration: none; color: black;" routerLink="/dashboard/editVet"
+            [queryParams]="{ id: userId, role: role }">Edit</button>
         </div>
       </div>
       <div class="divider"></div>
     </div>
   </div>
   <div class="frame111">
-    <div class="ellipse1"></div>
+    <div class="ellipse1"><img src="vet.imageUrl" alt=""></div>
     <div class="frame55">
       <div class="frame114">
         <div class="frame53">
@@ -43,10 +46,10 @@
           <div class="email">Email :</div>
           <div class="emailValue">{{vet.email}}</div>
         </div>
-        <div class="frame55">
+        <!-- <div class="frame55">
           <div class="clinic">Clinic :</div>
           <div class="clinicValue">{{clinic.clinicName}}, {{clinic.clinicLocation}}</div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

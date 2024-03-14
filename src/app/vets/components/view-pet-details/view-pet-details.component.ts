@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { PetServiceService } from '../../../pets/service/pet-service.service';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { AppointmentHistoryComponent } from '../appointment-history/appointment-history.component';
 
 @Component({
   selector: 'app-view-pet-details',
   standalone: true,
-  imports: [AppointmentHistoryComponent, RouterOutlet, RouterLink],
+  imports: [AppointmentHistoryComponent],
   templateUrl: './view-pet-details.component.html',
   styleUrl: './view-pet-details.component.css'
 })
@@ -44,9 +44,6 @@ export class ViewPetDetailsComponent {
     this.gender = this.route.snapshot.queryParamMap.get('gender');
     this.dateofbirth = this.route.snapshot.queryParamMap.get('dateOfBirth');
     this.imageURL = this.route.snapshot.queryParamMap.get('imageURL');
-
-
-
   }
   petparent: any = {
     petParentId: 1,

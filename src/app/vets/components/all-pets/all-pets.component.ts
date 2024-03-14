@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Pet } from '../../../pets/models/pet';
 import { PetServiceService } from '../../../pets/service/pet-service.service';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { HeaderComponent } from '../../../shared/components/header/header.component';
 
 @Component({
   selector: 'app-all-pets',
   standalone: true,
-  imports: [CommonModule, RouterOutlet,RouterLink],
+  imports: [CommonModule, RouterOutlet,RouterLink , HeaderComponent],
   templateUrl: './all-pets.component.html',
   styleUrl: './all-pets.component.css'
 })

@@ -13,10 +13,12 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EditPetparentComponent } from '../edit-petparent/edit-petparent.component';
 
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 
 import { PetServiceService } from '../../service/pet-service.service';
 import { Pet } from '../../models/pet';
+import { creds } from '../../../authentication/models/login';
+import { HeaderComponent } from '../../../shared/components/header/header.component';
 
 @Component({
   selector: 'app-profilepage',
@@ -31,17 +33,20 @@ import { Pet } from '../../models/pet';
     RouterLink,
     RouterOutlet,
     HttpClientModule,
+    HeaderComponent,
   ],
 })
 export class ProfilepageComponent implements OnInit {
   getallpets: any;
-
+  petParentId = -1;
   petForm: FormGroup;
   petParentName: any;
+  role: string = ''
   constructor(
     private petService: PetServiceService,
     private http: HttpClient,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute
   ) {
     this.petForm = this.fb.group({
       petName: [
@@ -59,10 +64,8 @@ export class ProfilepageComponent implements OnInit {
       dateOfbirth: ['', Validators.required],
       Allergies: ['', Validators.required],
     });
-    this.get();
-    this.getParent(1);
-    this.getPetBasedonParentId(1);
-    // this.editParent();
+
+
   }
 
   petinfo: any = {
@@ -84,15 +87,28 @@ export class ProfilepageComponent implements OnInit {
   };
 
   showForm = false;
+  pd: any;
 
   addPet() {
-    this.petService.addPet(1, this.petinfo).subscribe((res) => {
+    this.petService.addPet(this.petParentId, this.petinfo).subscribe((res) => {
       console.log(this.petinfo);
     });
   }
 
   ngOnInit() {
-    this.getParent(1);
+
+    this.route.queryParams.subscribe(params => {
+      this.petParentId = params['id'];
+      this.role = params['role'];
+      this.pd = params['petId'];
+    })
+
+    // this.get();
+    this.getParent(this.petParentId);
+    this.getPetBasedonParentId(this.petParentId);
+    // this.pd = this.route.snapshot.paramMap.get('id');
+    console.log("pd" + this.pd);
+    console.log("pared" + this.petParentId);
   }
 
   get() {
@@ -103,7 +119,7 @@ export class ProfilepageComponent implements OnInit {
   }
 
   PetParent = {
-    petParentId: 0,
+    petParentId: this.petParentId,
     petParentName: '',
     phoneNumber: '',
     gender: 'Mr',
@@ -121,6 +137,7 @@ export class ProfilepageComponent implements OnInit {
   openForm() {
     this.showForm = true;
 
+    this.putdata.petParentId = this.PetParent.petParentId
     this.putdata.petParentName = this.PetParent.petParentName;
     this.putdata.phoneNumber = this.PetParent.phoneNumber;
     this.putdata.address = this.PetParent.address;
@@ -134,7 +151,7 @@ export class ProfilepageComponent implements OnInit {
   }
 
   putdata = {
-    petParentId: 1,
+    petParentId: 0,
     petParentName: '',
     phoneNumber: '',
     address: '',
@@ -153,26 +170,8 @@ export class ProfilepageComponent implements OnInit {
     }
   }
 
-  putpet = {
-    petId: 1,
-    petName: '',
-    breed: '',
-    gender: '',
-    age: 0,
-    bloodGroup: '',
-    dateOfBirth: new Date(),
-    allergies: '',
-    petParent: {
-      petParentId: 1,
-      petParentName: '',
-      phoneNumber: '',
-      gender: 'Mr',
-      address: '',
-    },
-  };
-
   jdata = {
-    petId: 1,
+    petId: 0,
     petName: '',
     breed: '',
     gender: '',
@@ -182,7 +181,7 @@ export class ProfilepageComponent implements OnInit {
     allergies: '',
     imageURL: '',
     petParent: {
-      petParentId: 1,
+      petParentId: 0,
       petParentName: '',
       phoneNumber: '',
       gender: 'Mr',
@@ -204,7 +203,7 @@ export class ProfilepageComponent implements OnInit {
     this.jdata.dateOfBirth = c.dateOfBirth;
     this.jdata.allergies = c.allergis;
     this.jdata.imageURL = c.imageURL;
-    this.jdata.petParent.petParentId = 1;
+    this.jdata.petParent.petParentId = this.petParentId;
   }
 
   updatdePet(event: any) {
@@ -217,21 +216,64 @@ export class ProfilepageComponent implements OnInit {
       });
     }
   }
-  disableFutureDates() {
-    const today = new Date();
-    const inputElement = document.getElementById('dateof') as HTMLInputElement;
-    inputElement.max = today.toISOString().split('T')[0];
-  }
+
   getpetsbasedonparentid: any;
   getPetBasedonParentId(parentId: number) {
-    this.http
-      .get(
-        `http://localhost:8004/pet/getpetByParentId/${parentId}`
-      )
-      .subscribe((response: any) => {
-        this.getpetsbasedonparentid = response;
-        console.log(this.getpetsbasedonparentid);
-      });
+    this.petService.getpetByParent(parentId).subscribe((response: any) => {
+      this.getpetsbasedonparentid = response;
+      console.log(this.getpetsbasedonparentid);
+    });
   }
 
+
+
+  newAge(): void {
+    if (this.petinfo.dateOfBirth) {
+      console.log(this.petinfo.dateOfBirth);
+      const today = new Date();
+      const birthDate = new Date(this.petinfo.dateOfBirth);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+
+      if (
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < birthDate.getDate())
+      ) {
+        age--;
+      }
+      console.log(age);
+
+      this.jdata.age = age;
+      console.log('j data ' + this.jdata.age);
+      this.petinfo.age = age;
+      console.log('pet info ' + this.petinfo.age);
+    }
+  }
+
+  updateAge(): void {
+    if (this.jdata.dateOfBirth) {
+      console.log(this.jdata.dateOfBirth);
+      const today = new Date();
+      const birthDate = new Date(this.jdata.dateOfBirth);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+
+      if (
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < birthDate.getDate())
+      ) {
+        age--;
+      }
+      console.log(age);
+
+      this.jdata.age = age;
+      console.log('j data ' + this.jdata.age);
+      this.petinfo.age = age;
+      console.log('pet info ' + this.petinfo.age);
+    }
+  }
+
+  getMaxDate() {
+    return new Date().toISOString().split('T')[0];
+  }
 }

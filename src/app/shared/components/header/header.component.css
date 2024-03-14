@@ -101,3 +101,12 @@ padding-left: 16px;
 
 
 
+#vetname{
+    text-transform: capitalize;
+}
+
+.menu{
+    cursor: pointer;
+    z-index: 1;
+}
+

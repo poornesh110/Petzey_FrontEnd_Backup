@@ -4,17 +4,18 @@ import { Component } from '@angular/core';
 
 import { Vet } from '../../../vets/models/vet';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { environment } from '../../../../environments/environment';
+import { HeaderComponent } from '../../../shared/components/header/header.component';
+import { PetServiceService } from '../../service/pet-service.service';
 
 @Component({
   selector: 'app-doctors',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterOutlet],
+  imports: [CommonModule, RouterLink, RouterOutlet, HeaderComponent],
   templateUrl: './doctors.component.html',
   styleUrl: './doctors.component.css',
 })
 export class DoctorsComponent {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private petservice: PetServiceService) {
     this.getAllVets();
     this.getHighlyRated();
 
@@ -28,24 +29,20 @@ export class DoctorsComponent {
   highlyRatedVets: any;
 
   getAllVets() {
-    this.http
-      .get(`${environment.vet}get`)
-      .subscribe((res) => {
-        this.AllVets = res;
-        console.log(res);
-      });
+    this.petservice.getAllVets().subscribe((res) => {
+      this.AllVets = res;
+      console.log(res);
+    });
   }
 
 
   getHighlyRated() {
     console.log(this.highlyRatedVets);
-    this.http
-      .get(`${environment.vet}getHighlyRated`)
-      .subscribe((res) => {
-        this.highlyRatedVets = res;
+    this.petservice.getHighlyRated().subscribe((res) => {
+      this.highlyRatedVets = res;
 
-        console.log(res);
-      });
+      console.log(res);
+    });
     // this.sortByRatings();
   }
   sortByRatings() {

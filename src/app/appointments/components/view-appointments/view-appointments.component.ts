@@ -5,13 +5,12 @@ import { CommonModule } from '@angular/common';
 import { AppointmentSummaryComponent } from '../appointment-summary/appointment-summary.component';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import {
-  CognitoService,
-  IUser,
-} from '../../../authentication/Service/cognito.service';
-import { Vet } from '../../../vets/models/vet';
 import { Pet } from '../../../pets/models/pet';
-import { HttpHeaders } from '@angular/common/http';
+import { creds } from '../../../authentication/models/login';
+import { IdControllerService } from '../../../shared/services/idController/id-controller.service';
+import { catchError, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { HeaderComponent } from '../../../shared/components/header/header.component';
 
 @Component({
   selector: 'app-view-appointments',
@@ -22,54 +21,60 @@ import { HttpHeaders } from '@angular/common/http';
     RouterOutlet,
     RouterLink,
     FormsModule,
+    HeaderComponent,
   ],
 
   templateUrl: './view-appointments.component.html',
   styleUrl: './view-appointments.component.css',
 })
 export class ViewAppointmentsComponent {
+
+  cred: creds = new creds();
+
   constructor(
     private service: DashboardService,
     private rt: Router,
-    private route: ActivatedRoute,
-    private cognitoservice: CognitoService
-  ) {
-    this.currentUser = {} as IUser;
-  }
-  currentUser: IUser;
-  role: string = 'vet';
+    private router: ActivatedRoute,
+    private login: IdControllerService
+  ) { }
+
+
+  role: string = '';
   allAppointment: Appointment[] = [];
-  showNoAppointmentsMessage: boolean = false
+  showNoAppointmentsMessage: boolean = false;
   card: any;
   appointmentId: number = 0;
+
+  userid: number = 0;
+  curruser: creds = new creds();
+
   myObject: { [key: number]: any } = {};
   myVetObject: { [key: number]: any } = {};
 
-  ispet() {
-    return this.role == 'pet';
-  }
-
-  isvet() {
-    return this.role == 'vet';
-  }
-
   async ngOnInit() {
+
+    this.router.queryParams.subscribe(params => {
+      this.userid = params['id'];
+      this.role = params['role'];
+    })
+
+    console.log(this.userid, " ", " ", this.role)
     await this.getAllApointment();
-
     await this.getmicroservicedata();
-
-    this.route.params.subscribe(params => {
-      this.appointmentId = params['appointmentId'];
-      console.log('Appointment ID:', this.appointmentId);
-    });
   }
 
-  getcurrentuser() {
-    console.log(this.cognitoservice.getUser());
+  currentuserDetails() {
+    this.curruser = this.login.user
+    console.log(this.login.user)
   }
 
-  vetID: number = 701;
-  petId: number = 900;
+  isPetOwner() {
+    return this.role == 'PetOwner';
+  }
+
+  isVet() {
+    return this.role == 'Vet';
+  }
 
   async getmicroservicedata() {
     console.log('microservice is called');
@@ -77,6 +82,26 @@ export class ViewAppointmentsComponent {
       console.log(appointment.petId);
       const petdata = await this.getPetData(appointment.petId);
       const vetdata = await this.getVetData(appointment.vetId);
+    });
+  }
+
+  navigate1(vetName: string, vetId: number) {
+    console.log(vetName + '  ' + vetId);
+
+    this.rt.navigate([`/chat/${vetId}`], {
+      queryParams: {
+        name: vetName,
+      },
+    });
+  }
+
+  navigate2(petOwnerName: string, petId: number) {
+    console.log(petOwnerName + '  ' + petId);
+
+    this.rt.navigate([`/chat/${petId}`], {
+      queryParams: {
+        name: petOwnerName,
+      },
     });
   }
 
@@ -89,24 +114,31 @@ export class ViewAppointmentsComponent {
   }
 
   async getAllApointment() {
-    if (this.isvet()) {
+    if (this.isVet()) {
       try {
-        await this.service
-          .getAllAppointments(this.vetID)
+        this.service
+          .getAllAppointments(this.userid).pipe(catchError((error: any) => {
+            console.error('Error fetching appointments:', error);
+            return throwError('Failed to fetch appointments');
+          }))
           .subscribe((data: Appointment[]) => {
             this.allAppointment = data;
             if (data.length === 0) {
-              this.showNoAppointmentsMessage = true
+              this.showNoAppointmentsMessage = true;
             }
             console.log(data);
           });
       } catch (error) {
         console.log(error);
       }
-    } else if (this.ispet()) {
+    } else if (this.isPetOwner()) {
       try {
-        await this.service
-          .getAllAppointmentsbypetId(this.petId)
+        this.service
+          .getAllAppointmentsbypetId(this.userid).
+          pipe(catchError((error: any) => {
+            console.error('Error fetching appointments:', error);
+            return throwError('Failed to fetch appointments');
+          }))
           .subscribe((data: Appointment[]) => {
             this.allAppointment = data;
             console.log(data);
@@ -117,23 +149,32 @@ export class ViewAppointmentsComponent {
     }
   }
 
-  async getSelectedOption(event: Event): Promise<void> {
+  async getSelectedOptionByVet(event: Event): Promise<void> {
     const selectedOption = (event.target as HTMLSelectElement).value;
     console.log(selectedOption);
     if (selectedOption == 'ALL') {
       try {
-        await this.getAllApointment();
+        this.getAllApointment();
       } catch (error) {
         console.log(error);
       }
     } else {
       try {
-        await this.service
-          .getAppointmentbyFilterbyvetID(this.vetID, selectedOption)
+        this.service
+          .getAppointmentbyFilterbyvetID(this.userid, selectedOption).
+          pipe(catchError((error: any) => {
+            console.error('Error fetching appointments:', error);
+            return throwError('Failed to fetch appointments');
+          }))
           .subscribe((data: Appointment[]) => {
+            console.log("petfilter is called")
             this.allAppointment = data;
-            if (data.length === 0) {
+            if (data.length == 0) {
+              console.log(data.length == 0)
               this.showNoAppointmentsMessage = true
+              console.log(this.showNoAppointmentsMessage)
+            } else {
+              this.showNoAppointmentsMessage = false
             }
           });
       } catch (error) {
@@ -143,10 +184,40 @@ export class ViewAppointmentsComponent {
     this.goToFirstPage()
   }
 
+  async getSelectedOptionByPetParent(event: Event): Promise<void> {
+    const selectedOption = (event.target as HTMLSelectElement).value;
+    console.log(selectedOption);
+    if (selectedOption == 'ALL') {
+      try {
+        this.getAllApointment()
+      } catch (error) {
+        console.log(error)
+      }
+    } else {
+      try {
+        this.service.getAppointmentbyFilterBypetParentID(this.userid, selectedOption).
+          subscribe((data: Appointment[]) => {
+            if (data.length == 0) {
+              console.log(data.length == 0)
+              this.showNoAppointmentsMessage = true
+            } else {
+              this.showNoAppointmentsMessage = false
+            }
+            this.allAppointment = data
+          });
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    this.goToFirstPage()
+  }
+
+
   async getVetData(id: number) {
     try {
       await this.service.getvetdetails(id).subscribe((data) => {
         this.myVetObject[id] = data;
+        console.log(data)
         return data;
       });
     } catch (error) {
@@ -169,9 +240,13 @@ export class ViewAppointmentsComponent {
     additionalComments: '',
     appointmentProcessRating: 0,
   };
+
+
   navigate(id: number, vetId: number, petParentId: number, petId: number) {
     this.rt.navigate(['/details'], {
       queryParams: {
+        id: this.userid,
+        role: this.role,
         data: id,
         vetId: vetId,
         petParentId: petParentId,
@@ -261,15 +336,5 @@ export class ViewAppointmentsComponent {
       this.allAppointment.length / this.cardsPerPage
     );
     this.currentPage = totalPages;
-  }
-
-  navigate1(vetName: string, vetId: number) {
-    console.log(vetName + '  ' + vetId);
- 
-    this.rt.navigate([`/chat/${vetId}`], {
-      queryParams: {
-        name: vetName,
-      },
-    });
   }
 }
