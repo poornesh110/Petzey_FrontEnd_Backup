@@ -45,6 +45,6 @@ export class EditDoctorComponent {
   updateDetails() {
     this.vetService.editVetDetails(this.userID, this.vetData).subscribe(data => this.vetData = data);
     alert("Updated Successfully")
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/dashboard/profilevet'], { queryParams: { id: this.userID, role: this.role } });
   }
 }

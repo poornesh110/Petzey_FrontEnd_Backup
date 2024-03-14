@@ -17,7 +17,7 @@
         <div style="width: 104px; height: 100px; position: relative">
           <img
             style="width: 100px; height: 100px; left: 0px; top: 0px; position: absolute; background: linear-gradient(0deg, #DBC0DD 0%, #DBC0DD 100%); border-radius: 9999px"
-            src="{{vetData.imgUrl}}" />
+            src="{{vetData.imageURL}}" />
           <div
             style="width: 34px; height: 34px; left: 70px; top: 66px; position: absolute; justify-content: center; align-items: center; display: inline-flex">
             <div style="width: 34px; height: 34px; position: relative">
@@ -100,14 +100,14 @@
           </div>
         </div>
       </div>
-      <div style="width: 352px; height: 50px; position: relative">
+      <!-- <div style="width: 352px; height: 50px; position: relative">
         <div
           style="width: 151px; height: 17px; left: 0px; top: 0px; position: absolute; color: #667085; font-size: 16px; font-family: Inter; font-weight: 500; line-height: 24px; word-wrap: break-word">
           Clinic Address</div>
         <input type="text" value="{{clinic.clinicLocation}}"
           style="width: 352px; height: 50px; left: 3px; top: 31px; position: absolute; color: #4F4F4F; font-size: 16px; font-family: Inter; font-weight: 500; line-height: 24px; word-wrap: break-word"
           [(ngModel)]="clinic.clinicLocation" />
-      </div>
+      </div> -->
     </div>
   </div>
   <div
@@ -127,8 +127,7 @@
         style="flex: 1 1 0; height: 30px; padding-left: 18px; padding-right: 18px; padding-top: 10px; padding-bottom: 10px; background: #E62E05; box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05); border-radius: 8px; overflow: hidden; border: 1px #E62E05 solid; justify-content: center; align-items: center; gap: 8px; display: flex">
         <button class="btn btn-danger"
           style="color: white; font-size: 16px; font-family: Inter; font-weight: 500; line-height: 24px; word-wrap: break-word"
-          (click)="updateDetails()" routerLink="/dashboard/profilevet"
-          [queryParams]="{ id: userID, role: role }">Confirm</button>
+          (click)="updateDetails()">Confirm</button>
       </div>
     </div>
   </div>

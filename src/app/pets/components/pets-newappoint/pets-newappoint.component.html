@@ -4,11 +4,12 @@
   <p class="backbtn" id="heading" (click)="goBack()"> <i class="fa fa-arrow-left" aria-hidden="true"></i> Back to
     Appointments</p>
   <h2 id="heading">New Appointment</h2>
+  <h6>Fields marked with <span style="color: red;">* </span> are mandatory. </h6>
   <hr>
   <div id="form-container">
     <form id="appointment-form" #userForm="ngForm">
       <div id="calendar">
-        <label for="">Appointment Date:</label>
+        <label for="" class="required-field">Appointment Date:</label>
         <input type="text" #refdate="ngModel" name="date" onfocus="(this.type='date')" required
           onblur="if(!this.value) this.type='text'" ngModel [min]="minDate" (input)="getTime($event)">
         <div *ngIf="refdate.errors && (refdate.dirty || refdate.touched)" class="alert alert-danger">
@@ -16,13 +17,13 @@
             Please select the date.
           </div>
         </div>
-        <label for="">Veterinarian :</label>
+        <label for="" class="required-field">Veterinarian :</label>
         <select name="vetname" id="" (change)="getVetID($event)" ngModel>
-          <option *ngFor="let vet of vets" [value]="vet.vetId">{{vet.vetName}} ---{{vet.vetId}} </option>
+          <option *ngFor="let vet of vets" [value]="vet.vetId">{{vet.vetName}} </option>
         </select>
       </div>
       <br>
-      <label for="">Appointment Time:</label><br>
+      <label for="" class="required-field">Appointment Time:</label><br>
       <!-- <div id="time-slot"> -->
       <span *ngFor="let slots of vetSlotes,let i=index">
         <button #timeBtn (click)="appTime(timeBtn.value,i)" [value]="slots"
@@ -32,14 +33,14 @@
       </span>
       <div id="patient-details">
         <h2>Patient Details</h2>
-        <label for="pet-name">Pet :</label>
-        <select name="" id=" " (change)="getPetID($event)">
+        <label for="pet-name" class="required-field">Pet :</label>
+        <select name="" id="selectedPetId" (change)="getPetID($event)" [(ngModel)]="selectedPetId">
           <option *ngFor="let pet of pets" [value]="pet.petId">{{pet.petName}}</option>
         </select>
         <h2>Other Details</h2>
-        <label for="pet-issues">Pet Issues</label>
+        <label for="pet-issues" class="required-field">Pet Issues</label>
         <input type="text" id="pet-parent" name="pet-parent" required [(ngModel)]="newAppointment.pet_issues">
-        <label for="patient-condition">Reason for visit:</label>
+        <label for="patient-condition" class="required-field">Reason for visit:</label>
         <textarea id="patient-condition" name="patient-condition" required
           [(ngModel)]="newAppointment.reasons_for_visit"></textarea>
 
@@ -71,7 +72,7 @@
 </div>
 
 
-<div class="modal fade popup" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade popup" id="exampleModal11" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

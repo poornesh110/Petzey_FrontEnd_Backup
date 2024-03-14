@@ -29,13 +29,13 @@ export class ViewTestsComponent {
       this.id = params['data'];
     })
 
-    this.appointmentService.getAppointmentDetails(2).subscribe(data => {
+    this.appointmentService.getAppointmentDetails(this.id).subscribe(data => {
       this.appointmentdetails = data
       this.test = this.appointmentdetails.appointmentReport.tests
       console.log("view tests working")
       console.log(this.test);
-      
-      
+
+
     })
   }
 

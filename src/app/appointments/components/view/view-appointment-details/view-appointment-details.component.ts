@@ -22,6 +22,7 @@ export class ViewAppointmentDetailsComponent {
 
   isClosed: boolean = false
   isCancelled: boolean = false
+  isAppointmentClosable = false
   id: number = 0
   role: string = '';
   constructor(
@@ -111,14 +112,31 @@ export class ViewAppointmentDetailsComponent {
   vets: Vet[] = []
   doctorName: string = ''
   appointment: Appointment = new Appointment
+  formatDate(date: Date): Date {
+
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  }
 
   ngOnInit(): void {
     this.rt.queryParams.subscribe(params => {
       this.id = params['data'];
       this.role = params['role'];
     })
+    console.log("Appointment Id", this.id);
+
     this.appointmentService.getAppointmentDetails(this.id).subscribe(data => {
       this.appointment = data
+      let currentDate = this.formatDate(new Date());
+      console.log(currentDate);
+
+      let castingDate = new Date(this.appointment.appointmentDate);
+      let appDate = this.formatDate(castingDate);
+      console.log(appDate);
+      if (appDate <= currentDate) {
+        this.isAppointmentClosable = true
+      }
+      console.log(this.isAppointmentClosable);
+
       if (this.appointment.appointmentStatus == 'CLOSED') {
         this.isClosed = true
       }

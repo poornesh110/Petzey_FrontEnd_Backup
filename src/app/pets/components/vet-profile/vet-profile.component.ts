@@ -2,58 +2,50 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
+import { PetServiceService } from '../../service/pet-service.service';
+import { vets } from '../../models/vetdata';
+import { Vet } from '../../../vets/models/vet';
+import { Clinic } from '../../../shared/models/clinic';
 
 @Component({
   selector: 'app-vet-profile',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink ,HeaderComponent],
+  imports: [CommonModule, RouterOutlet, RouterLink, HeaderComponent],
   templateUrl: './vet-profile.component.html',
-  styleUrl: './vet-profile.component.css'
+  styleUrl: './vet-profile.component.css',
 })
 export class VetProfileComponent {
-  name:any;
-  url:any;
-  number:any;
-  constructor(private route: ActivatedRoute){}
+  vet: Vet = {
+    vetId: 0,
+    vetName: '',
+    mobileNo: '',
+    email: '',
+    speciality: '',
+    rating: 0,
+    subscribe: function (arg0: (data: any) => any): void {
+      throw new Error('Function not implemented.');
+    },
+    imgUrl: '',
+    clinic: new Clinic(),
+    imageURL: '',
+  };
+  petParentId: any;
+  vetId: any;
+  constructor(
+    private route: ActivatedRoute,
+    private petservice: PetServiceService
+  ) { }
 
   ngOnInit() {
-    this.name = this.route.snapshot.queryParamMap.get('name');
-    this.url = this.route.snapshot.queryParamMap.get('url');
-    this.number = this.route.snapshot.queryParamMap.get('number');
+    this.petParentId = this.route.snapshot.queryParamMap.get('petParentId');
+    this.vetId = this.route.snapshot.queryParamMap.get('vetId');
+    this.getVet(this.vetId)
   }
-  AllAppointments = [
-    {url:"./assets/Ellipse 1.svg", name:"DR. John Doe", title:"Navle", pet:"Doggo",time:"18:05",date:"2014-12-12"},
-    {url:"./assets/Ellipse 2.svg", name:"DR. John Doe", title:"Navle", pet:"Doggo",time:"18:05",date:"2014-12-12"},
-    {url:"./assets/Ellipse 3.svg", name:"DR. John Doe", title:"Navle", pet:"Doggo",time:"18:05",date:"2014-12-12"},
-    {url:"./assets/Ellipse 2.svg", name:"DR. John Doe", title:"Navle", pet:"Doggo",time:"18:05",date:"2014-12-12"},
-    {url:"./assets/Ellipse 1.svg", name:"DR. John Doe", title:"Navle", pet:"Doggo",time:"18:05",date:"2014-12-12"},
-    {url:"./assets/Ellipse 3.svg", name:"DR. John Doe", title:"Navle", pet:"Doggo",time:"18:05",date:"2014-12-12"},
-    {url:"./assets/Ellipse 1.svg", name:"DR. John Doe", title:"Navle", pet:"Doggo",time:"18:05",date:"2014-12-12"}
-  ]
 
-  scrollItems = [
-    'Herb Costales',
-    'Gloria Cherie',
-    'Paraskeva Goran',
-    'Paskal',
-    'Nadia',
-    'Lyudmila',
-    'Mihaela',
-    'Snezhana',
-    'Katya',
-    'Ekaterina',
-    'Milena',
-    'Nedyalka',
-    'Nadejda',
-    'Hristina',
-    'Denica',
-    'Gabriela',
-    'Kuzman',
-    'Roza',
-    'Genko',
-    'Lyubomir',
-    'Tereza',
-    'Eva',
-    'Zara',
-    'Mila']
+  getVet(vetid: number) {
+    this.petservice.getVetById(vetid).subscribe((res: Vet) => {
+      this.vet = res;
+
+    });
+  }
 }

@@ -46,7 +46,7 @@
                 gap: 16px;
               ">
 
-            <img style="width: 100px; height: 100px; border-radius: 9999px" src="{{ items.url }}" />
+            <img style="width: 100px; height: 100px; border-radius: 9999px" src="{{ items.imageURL }}" />
             <div style="
                   flex-direction: column;
                   justify-content: flex-start;
@@ -121,7 +121,7 @@
   style="margin: 16px;margin-top: 2%;margin-left: 230px;width: 1200px;position: relative;left: 60px;top:-40px;">
 
   <div *ngFor="let items of AllVets" class="col">
-    <a routerLink="/pets/vetprofile" [queryParams]="{ name: items.name, url: items.url, number: items.number }">
+    <a routerLink="/dashboard/vetprofile" [queryParams]="{  id: petParentId, role: role,  vetId:items.vetId }">
       <div class="card" style="margin-bottom: 16px">
         <div class="card-body" style="padding: 16px">
           <div style="
@@ -130,7 +130,7 @@
                 display: inline-flex;
                 gap: 16px;
               ">
-            <img style="width: 100px; height: 100px; border-radius: 9999px" src="assets/Ellipse 1.svg" />
+            <img style="width: 100px; height: 100px; border-radius: 9999px" src="{{items.imageURL}}" />
             <div style="
                   flex-direction: column;
                   justify-content: flex-start;

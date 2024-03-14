@@ -54,7 +54,7 @@
           <div *ngFor="let items of getpetsbasedonparentid">
             <div class="card" style="width: max-content">
               <mat-card-content routerLink="/dashboard/viewpet"
-                [queryParams]="{ id: petParentId, role: role,  petId:items.petParent.petParentId}">
+                [queryParams]="{ id: petParentId, role: role,  petId:items.petId}">
                 <div class="card-body d-flex align-items-center">
                   <div class="me-4">
                     <img src="{{items.imageURL}}" alt="Profile Image" class="rounded-circle"

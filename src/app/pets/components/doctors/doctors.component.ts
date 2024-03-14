@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 
 import { Vet } from '../../../vets/models/vet';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { PetServiceService } from '../../service/pet-service.service';
 
@@ -15,13 +15,24 @@ import { PetServiceService } from '../../service/pet-service.service';
   styleUrl: './doctors.component.css',
 })
 export class DoctorsComponent {
-  constructor(private http: HttpClient, private petservice: PetServiceService) {
-    this.getAllVets();
-    this.getHighlyRated();
+  petParentId: any;
+  role: any;
+  vetId: any;
+  constructor(private http: HttpClient, private petservice: PetServiceService, private route: ActivatedRoute) {
+
 
   }
   hide: boolean = false;
 
+  ngOnInit() {
+    this.getAllVets();
+    this.getHighlyRated();
+    this.route.queryParams.subscribe((params) => {
+      this.petParentId = params['id'];
+      this.role = params['role'];
+      this.vetId = params['vetId'];
+    });
+  }
   togglebar() {
     this.hide = !this.hide;
   }

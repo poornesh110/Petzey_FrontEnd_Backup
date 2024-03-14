@@ -1,4 +1,3 @@
-
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Pet } from '../models/pet';
@@ -13,7 +12,6 @@ import { creds } from '../../authentication/models/login';
   providedIn: 'root',
 })
 export class PetServiceService {
-
   c: creds = new creds();
   petparentId = this.c.userid;
   petURL = environment.PetURL;
@@ -22,14 +20,14 @@ export class PetServiceService {
   constructor(private http: HttpClient) { }
 
   getHighlyRated() {
-    return this.http.get(this.veturl + `get`)
+    return this.http.get(this.veturl + `getHighlyRated`);
   }
   getAllVets() {
-    return this.http.get(this.veturl + `getHighlyRated`)
+    return this.http.get(this.veturl + `get`);
   }
 
   getpetByParent(parentId: number) {
-    return this.http.get(this.petURL + `/getpetByParentId/${parentId}`)
+    return this.http.get(this.petURL + `/getpetByParentId/${parentId}`);
   }
   addPet(parentId: number, newPet: any) {
     console.log('inside service add pet');
@@ -54,6 +52,10 @@ export class PetServiceService {
     return this.http.get(this.petURL + `/getParentByID/${id}`);
   }
 
+  getPetbyid(id: number): Observable<Pet> {
+    return this.http.get<Pet>(this.petURL + `/get/${id}`);
+  }
+
   getPetList() {
     return this.http.get(`${this.petURL}/getAll`);
   }
@@ -63,19 +65,18 @@ export class PetServiceService {
   }
 
   getAllAppointments(id: number): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>
-      (this.appointmenturl + `/getallAppointmentByParentId/${id}`);
+    return this.http.get<Appointment[]>(
+      this.appointmenturl + `/getallAppointmentByParentId/${id}`
+    );
   }
 
   getVetById(id: number): Observable<Vet> {
-    return this.http
-      .get(this.veturl + `/api/vet/${id}`)
-      .pipe(
-        map((response) => response as Vet),
-        catchError((error) => {
-          console.error('Error fetching vet:', error);
-          return throwError(error);
-        })
-      );
+    return this.http.get(this.veturl + `${id}`).pipe(
+      map((response) => response as Vet),
+      catchError((error) => {
+        console.error('Error fetching vet:', error);
+        return throwError(error);
+      })
+    );
   }
 }

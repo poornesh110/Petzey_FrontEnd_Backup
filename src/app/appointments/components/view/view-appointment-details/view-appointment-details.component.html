@@ -61,8 +61,11 @@
     <button type="submit" class="btn btn-outline-dark edit float-right some-other-class" id="edit" data-toggle="modal"
       data-target="#exampleModal2" [disabled]="isCancelled || isClosed">Edit</button>
     <!-- <button type = "submit" id = "close">Close Appointment</button> -->
-    <button type="submit" class="btn btn-outline-dark edit float-right some-other-class" id="close" data-toggle="modal"
-      data-target="#exampleModal1" [disabled]="isCancelled || isClosed" *ngIf="role=='Vet'">Close Appointment</button>
+
+    <button *ngIf="isAppointmentClosable" type="submit" class="btn btn-outline-dark edit float-right some-other-class"
+      id="close" data-toggle="modal" data-target="#exampleModal1" [disabled]="isCancelled || isClosed ">Close
+      Appointment</button>
+
   </div>
 
   <div class="modal fade popup" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

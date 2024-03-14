@@ -41,7 +41,6 @@ export class ProfilepageComponent implements OnInit {
   petParentId = -1;
   petForm: FormGroup;
   petParentName: any;
-  role: string = ''
   constructor(
     private petService: PetServiceService,
     private http: HttpClient,
@@ -64,8 +63,6 @@ export class ProfilepageComponent implements OnInit {
       dateOfbirth: ['', Validators.required],
       Allergies: ['', Validators.required],
     });
-
-
   }
 
   petinfo: any = {
@@ -88,6 +85,7 @@ export class ProfilepageComponent implements OnInit {
 
   showForm = false;
   pd: any;
+  role: string = '';
 
   addPet() {
     this.petService.addPet(this.petParentId, this.petinfo).subscribe((res) => {
@@ -96,19 +94,18 @@ export class ProfilepageComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.petParentId = params['id'];
       this.role = params['role'];
       this.pd = params['petId'];
-    })
+    });
 
     // this.get();
     this.getParent(this.petParentId);
     this.getPetBasedonParentId(this.petParentId);
     // this.pd = this.route.snapshot.paramMap.get('id');
-    console.log("pd" + this.pd);
-    console.log("pared" + this.petParentId);
+    console.log('pd' + this.pd);
+    console.log('pared' + this.petParentId);
   }
 
   get() {
@@ -137,7 +134,7 @@ export class ProfilepageComponent implements OnInit {
   openForm() {
     this.showForm = true;
 
-    this.putdata.petParentId = this.PetParent.petParentId
+    this.putdata.petParentId = this.PetParent.petParentId;
     this.putdata.petParentName = this.PetParent.petParentName;
     this.putdata.phoneNumber = this.PetParent.phoneNumber;
     this.putdata.address = this.PetParent.address;
@@ -224,8 +221,6 @@ export class ProfilepageComponent implements OnInit {
       console.log(this.getpetsbasedonparentid);
     });
   }
-
-
 
   newAge(): void {
     if (this.petinfo.dateOfBirth) {

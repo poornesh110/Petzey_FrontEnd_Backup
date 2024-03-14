@@ -27,6 +27,8 @@ import { HeaderComponent } from '../../../shared/components/header/header.compon
   ],
   templateUrl: './pets-newappoint.component.html',
   styleUrl: './pets-newappoint.component.css',
+  styles: [`input.ng-invalid{border-left:5px solid red;}
+  input.ng-valid{border-left: 5px solid green;}` ],
 })
 export class PetsNewappointComponent {
   errorMessage: string = '';
@@ -40,11 +42,12 @@ export class PetsNewappointComponent {
   pets: Pet[] = [];
   petParent: PetParent = new PetParent();
   vets: Vet[] = [];
+  isTimeSelected: boolean = false
   time: Date = new Date();
   vetSlotes: string[] = [];
   selectedButtonIndex: number | null = null;
   role: any;
-  constructor(private service: AppointmentService, private rt: Router, private location: Location, private fb: FormBuilder, private router: ActivatedRoute) {
+  constructor(private service: AppointmentService, private rt: Router, private location: Location, private fb: FormBuilder, private router: ActivatedRoute, private route: Router) {
     this.appointmentForm = this.fb.group({
       vetName: ['', Validators.required]
     });
@@ -86,6 +89,9 @@ export class PetsNewappointComponent {
   }
 
   getPetID(event: any) {
+    console.log("pet id"
+      + event.target.value);
+
     this.selectedPetId = event.target.value;
   }
 
@@ -108,17 +114,30 @@ export class PetsNewappointComponent {
   onSumbitForm(): void {
     this.newAppointment.appointmentDate = this.time;
     this.newAppointment.appointment_time = this.selectedButton;
+    console.log("pet id in submit " + this.selectedPetId);
 
-    this.service.addAppointment(this.newAppointment, this.selectedVetId, 1, this.selectedPetId).subscribe((data) => {
-      console.log("deleted time:", this.selectedButton);
-      this.service.updateVetSchedules(this.selectedVetId, `${this.time}`, this.selectedButton).subscribe(data => {
-      });
-      alert("Appointment Scheduled Succesfully")
-    },
-      (error) => {
-        this.errorMessage = error.message;
-      }
-    );
+
+    if (this.isTimeSelected) {
+      this.service.addAppointment(this.newAppointment, this.selectedVetId, this.petParentId, this.selectedPetId).subscribe((data) => {
+        console.log("deleted time:", this.selectedButton);
+        this.service.updateVetSchedules(this.selectedVetId, `${this.time}`, this.selectedButton).subscribe(data => {
+        });
+        alert("Appointment Scheduled Succesfully")
+        this.route.navigate(['/dashboard'], {
+          queryParams: {
+            role: this.role,
+            id: this.petParentId
+          },
+        });
+      },
+        (error) => {
+          this.errorMessage = error.message;
+        }
+      );
+    }
+    else {
+      alert("please select time for appointment")
+    }
   }
 
 
@@ -141,6 +160,7 @@ export class PetsNewappointComponent {
   appTime(time: any, index: number) {
     this.selectButton = time;
     this.selectedButton = time
+    this.isTimeSelected = true
     this.selectedButtonIndex = index;
   }
 }

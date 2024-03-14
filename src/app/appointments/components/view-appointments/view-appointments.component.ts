@@ -242,12 +242,12 @@ export class ViewAppointmentsComponent {
   };
 
 
-  navigate(id: number, vetId: number, petParentId: number, petId: number) {
+  navigate(appointmentId: number, vetId: number, petParentId: number, petId: number) {
     this.rt.navigate(['/details'], {
       queryParams: {
         id: this.userid,
         role: this.role,
-        data: id,
+        data: appointmentId,
         vetId: vetId,
         petParentId: petParentId,
         petId: petId,

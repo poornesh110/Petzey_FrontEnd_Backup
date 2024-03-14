@@ -28,6 +28,7 @@ import { VetprofileComponent } from './vets/components/vetprofile/vetprofile.com
 import { EditDoctorComponent } from './vets/components/edit-doctor/edit-doctor.component';
 import { AllVetsComponent } from './vets/components/all-vets/all-vets.component';
 import { PetsNewappointComponent } from './pets/components/pets-newappoint/pets-newappoint.component';
+import { ViewPetDetailsComponent } from './vets/components/view-pet-details/view-pet-details.component';
 
 export const routes: Routes = [
   {
@@ -86,5 +87,6 @@ export const routes: Routes = [
   { path: 'enter-email', component: ResetPasswordComponent },
   { path: 'chat/:userId', component: NewChatComponent },
   { path: 'view-appointments', component: ViewAppointmentsComponent },
+  { path: 'view-pet-details', component: ViewPetDetailsComponent }
 
 ];
