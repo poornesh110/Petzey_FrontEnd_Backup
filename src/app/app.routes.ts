@@ -28,6 +28,7 @@ import { VetprofileComponent } from './vets/components/vetprofile/vetprofile.com
 import { EditDoctorComponent } from './vets/components/edit-doctor/edit-doctor.component';
 import { AllVetsComponent } from './vets/components/all-vets/all-vets.component';
 import { PetsNewappointComponent } from './pets/components/pets-newappoint/pets-newappoint.component';
+import { SidebarComponent } from './pets/components/sidebar/sidebar.component';
 
 export const routes: Routes = [
   {
@@ -47,7 +48,7 @@ export const routes: Routes = [
       { path: 'doctor', component: DoctorsComponent },
       { path: 'vetprofile', component: VetProfileComponent },
       { path: 'viewpet', component: ViewPetComponent },
-      { path: 'feedback/:appointmentId', component: ViewAppointmentsComponent },
+      // { path: 'feedback/:appointmentId', component: ViewAppointmentsComponent },
       { path: 'newAppointmentbyPetOwner', component: PetsNewappointComponent }
 
     ],
@@ -85,5 +86,15 @@ export const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'enter-email', component: ResetPasswordComponent },
   { path: 'chat/:userId', component: NewChatComponent },
-  { path: 'view-appointments', component: ViewAppointmentsComponent }
+  { path: 'view-appointments', component: ViewAppointmentsComponent },
+
+
+  // {
+  //   path: '',
+  //   component: SidebarComponent,
+  //   children: [
+  //     { path: 'feedbackpet/:appointmentId', component: BodyComponent },
+  //   ]
+
+  // },
 ];

@@ -23,11 +23,11 @@ export class ViewPetPetparentComponent {
   petId: number = 0;
   vetId: number = 0;
   constructor(private appointmentService: AppointmentService, private rt: ActivatedRoute,
-              private petService: PetServiceService,private clinicService: ClinicService) { }
+    private petService: PetServiceService, private clinicService: ClinicService) { }
   petParent: PetParent = new PetParent;
   vet: Vet = new Vet;
   pet: Pet = new Pet;
-  clinic:Clinic = new Clinic;
+  clinic: Clinic = new Clinic();
 
   ngOnInit() {
     this.rt.queryParams.subscribe(params => {
@@ -41,9 +41,9 @@ export class ViewPetPetparentComponent {
       console.log("pet parent: " + data);
 
     },
-    (error) => {
-      alert(error)
-    })
+      (error) => {
+        alert(error)
+      })
     this.appointmentService.getVetById(this.vetId).subscribe(data => {
       this.vet = data;
       console.log("vet: " + data);
@@ -52,7 +52,7 @@ export class ViewPetPetparentComponent {
     this.appointmentService.getPetById(this.petId).subscribe(data => {
       this.pet = data;
       console.log("pet: " + this.pet);
-      
+
     })
 
     this.clinicService.getClinicDetailsByVetId(this.vetId).subscribe(data => {

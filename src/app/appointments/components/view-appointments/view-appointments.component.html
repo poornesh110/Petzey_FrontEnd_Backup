@@ -69,10 +69,10 @@
                     card.petId
                   )
                 " ngModel="{{ card.appointmentId }}">Details</a>
-              <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="bookAppointment-btn"
+              <!-- <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="bookAppointment-btn"
                 class="detailstext" [routerLink]="['/feedback', card.appointmentId]">
                 Feedback
-              </a>
+              </a> -->
             </div>
           </div>
         </div>
@@ -283,7 +283,7 @@
             <div class="cardupper">
               <div>
                 <!-- [src]="card.imgUrl" -->
-                <img class="cardimg" src="../../../../assets/images/Ellipse 1.png">
+                <img class="cardimg" src="{{getVetById(card.vetId).imageURL}}">
               </div>
               <div class="carduppertext">
                 <!-- [ngOnInit]="getPetData(card.petId)" -->

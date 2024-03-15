@@ -2,14 +2,14 @@ import { PetParent } from "./pet_parent"
 
 export class Pet{
     petId:number = 0;
-    petName: String = "";
+    petName: string = "";
     breed: string = "";
-    gender: String = "";
+    gender: string = "";
     age:number= 0;
-    bloodGroup: String = "";
+    bloodGroup: string = "";
     imageURL:string ="";
     dateOfBirth: Date = new Date();
-    allergies:String = "";
+    allergies:string = "";
     petParent: PetParent = new PetParent;
     petType: string="";
     petBreed: string="";

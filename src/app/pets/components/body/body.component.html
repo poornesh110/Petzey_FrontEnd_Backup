@@ -14,8 +14,8 @@
         <option class="status" value="CANCELLED">Cancelled</option>
       </select>
       <a routerLink="/pets/newappointment">
-      <button class="newAppointmentbtn">+ New Appointment</button>
-    </a>
+        <button class="newAppointmentbtn">+ New Appointment</button>
+      </a>
     </div>
   </div>
 
@@ -50,8 +50,8 @@
                 <a routerLink="/chat/`{{card.petId}}`" class="chat"> <img src="../../assets/images/ic_comment_24px.png"
                     alt="send"></a>
                 <!-- <a href="" class="chat"> <img src="../../assets/images/ic_comment_24px.png" alt=""></a> -->
-                <a  class="call"> <img src="../../assets/images/Frame (1).png" alt=""></a>
-                <a  class="videocall"> <img src="../../assets/images/Frame.png" alt=""></a>
+                <a class="call"> <img src="../../assets/images/Frame (1).png" alt=""></a>
+                <a class="videocall"> <img src="../../assets/images/Frame.png" alt=""></a>
               </div>
             </div>
           </div>
@@ -66,16 +66,10 @@
                     card.petId
                   )
                 " ngModel="{{ card.appointmentId }}">Details</a>
-              <a
-              type="button"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal2"
-              id="bookAppointment-btn"
-              class="detailstext"
-              [routerLink]="['/feedbackpet', card.appointmentId]"
-              >
-              Feedback
-            </a>
+              <!-- <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="bookAppointment-btn"
+                class="detailstext" [routerLink]="['/feedbackpet', card.appointmentId]">
+                Feedback
+              </a> -->
             </div>
           </div>
         </div>
@@ -84,20 +78,20 @@
 
     <div class="pagination p5">
       <ul>
-          <a (click)="goToFirstPage()">
-              <li><button class="paginationbtn">First</button></li>
-          </a>
-          <a (click)="previousPage()">
-              <li><button class="paginationbtn">Prev</button></li>
-          </a>
-          <a (click)="nextPage()">
-              <li><button class="paginationbtn">Next</button></li>
-          </a>
-          <a (click)="goToLastPage()">
-              <li><button class="paginationbtn">Last</button></li>
-          </a>
+        <a (click)="goToFirstPage()">
+          <li><button class="paginationbtn">First</button></li>
+        </a>
+        <a (click)="previousPage()">
+          <li><button class="paginationbtn">Prev</button></li>
+        </a>
+        <a (click)="nextPage()">
+          <li><button class="paginationbtn">Next</button></li>
+        </a>
+        <a (click)="goToLastPage()">
+          <li><button class="paginationbtn">Last</button></li>
+        </a>
       </ul>
-  </div>
+    </div>
   </div>
 
   <!-- feedback popup -->

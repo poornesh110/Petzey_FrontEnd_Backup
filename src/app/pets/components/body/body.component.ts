@@ -34,11 +34,11 @@ export class BodyComponent {
   constructor(
     private service: DashboardService,
     private rt: Router,
-    private route:ActivatedRoute,
+    private route: ActivatedRoute,
     private cognitoservice: CognitoService,
     private petservice: PetServiceService,
-    private http:HttpClient,
-    private id:IdControllerService
+    private http: HttpClient,
+    private id: IdControllerService
 
   ) {
     this.currentUser = {} as IUser;
@@ -51,11 +51,12 @@ export class BodyComponent {
   allAppointment: Appointment[] = [];
 
   myObject: { [key: number]: any } = {};
-  myVetObject:{[key:number]:any}={};
-  card:any;
-  userid:number=0;
-  ispet(){
-    return this.role=='pet';
+  myVetObject: { [key: number]: any } = {};
+  card: any;
+  userid: number = 0;
+  appointmentId: number = 0;
+  ispet() {
+    return this.role == 'pet';
   }
 
   isvet() {
@@ -63,15 +64,16 @@ export class BodyComponent {
   }
 
 
-  async ngOnInit(){
+  async ngOnInit() {
     await this.getAllApointment()
     await this.getmicroservicedata()
 
     this.route.params.subscribe(params => {
       this.userid = params['id'];
-      
+      this.appointmentId = params['appointmentId'];
+
     });
-  
+
   }
 
   petparentId: number = 1;
@@ -169,13 +171,13 @@ export class BodyComponent {
       },
     });
   }
- 
- 
+
+
   onSubmit() {
-    console.log('Submitting feedback for Appointment ID:', this.userid);
- 
-    if (this.userid) {
-      this.service.submitFeedback(this.userid, this.feedback).subscribe(
+    console.log('Submitting feedback for Appointment ID:', this.appointmentId);
+
+    if (this.appointmentId) {
+      this.service.submitFeedback(this.appointmentId, this.feedback).subscribe(
         (response: any) => {
           console.log('Feedback submitted successfully', response);
           this.resetForm();

@@ -90,6 +90,7 @@ export class ProfilepageComponent implements OnInit {
   addPet() {
     this.petService.addPet(this.petParentId, this.petinfo).subscribe((res) => {
       console.log(this.petinfo);
+      window.location.reload();
     });
   }
 
@@ -167,15 +168,16 @@ export class ProfilepageComponent implements OnInit {
     }
   }
 
-  jdata = {
+
+  jdata: any = {
     petId: 0,
-    petName: '',
+    petName: "",
     breed: '',
     gender: '',
     age: 0,
     bloodGroup: '',
     dateOfBirth: new Date(),
-    allergies: '',
+    allergis: '',
     imageURL: '',
     petParent: {
       petParentId: 0,
@@ -183,28 +185,37 @@ export class ProfilepageComponent implements OnInit {
       phoneNumber: '',
       gender: 'Mr',
       address: '',
+      email: "",
+      imageURL: ""
     },
   };
 
+
+
   updatefetch(id: number) {
-    const c = this.getpetsbasedonparentid.find((p: Pet) => {
-      return p.petId == id;
+    // const c = this.getpetsbasedonparentid.find((p: Pet) => {
+    //   return p.petId == id;
+    // });
+
+    // this.jdata.petId = c.petId;
+    // this.jdata.petName = c.petName;
+    // this.jdata.breed = c.breed;
+    // this.jdata.gender = c.gender;
+    // this.jdata.age = c.age;
+    // this.jdata.bloodGroup = c.bloodgroup;
+    // this.jdata.dateOfBirth = c.dateOfBirth;
+    // this.jdata.allergis = c.allergis;
+    // this.jdata.imageURL = c.imageURL;
+    // this.jdata.petParent.petParentId = this.petParentId;
+    this.petService.getPetbyid(id).subscribe((res) => {
+      console.log("inside fetch")
+      console.log(res);
+      this.jdata = res;
+
     });
-
-    this.jdata.petId = c.petId;
-    this.jdata.petName = c.petName;
-    this.jdata.breed = c.breed;
-    this.jdata.gender = c.gender;
-    this.jdata.age = c.age;
-    this.jdata.bloodGroup = c.bloodgroup;
-    this.jdata.dateOfBirth = c.dateOfBirth;
-    this.jdata.allergies = c.allergis;
-    this.jdata.imageURL = c.imageURL;
-    this.jdata.petParent.petParentId = this.petParentId;
   }
-
   updatdePet(event: any) {
-    if (confirm('Are you want to update this data')) {
+    if (confirm('Do you want to update this data')) {
       console.log(this.jdata);
       this.petService.updatePet(this.jdata).subscribe(() => {
         console.log(this.jdata);
