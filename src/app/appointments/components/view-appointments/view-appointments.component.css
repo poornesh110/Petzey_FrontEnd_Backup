@@ -580,5 +580,13 @@ ul.rating li {
 .petownerpagination {
   position: absolute;
   left: 700px;
-  top: 760px;
+  top: 790px;
+}
+
+.call {
+  cursor: not-allowed;
+}
+
+.videocall {
+  cursor: not-allowed;
 }

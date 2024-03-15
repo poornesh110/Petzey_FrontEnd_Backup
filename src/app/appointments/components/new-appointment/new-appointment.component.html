@@ -35,7 +35,7 @@
           <label for="petParentName" class="required-field">PetParent:</label>
           <select name="vetname" id="vetname" (change)="getPetParentID($event)" [(ngModel)]="selectedPetParentId"
             required>
-            <option *ngFor="let petParent of petParents" [value]="petParent.petParentId">{{petParent.petParentName}} ---
+            <option *ngFor="let petParent of petParents" [value]="petParent.petParentId">{{petParent.petParentName}}
             </option>
           </select>
 

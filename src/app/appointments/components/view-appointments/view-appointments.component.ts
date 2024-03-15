@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DashboardService } from '../../services/dashboard_service/dashboard.service';
 import { Appointment } from '../../models/appointment';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { AppointmentSummaryComponent } from '../appointment-summary/appointment-summary.component';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -35,7 +35,8 @@ export class ViewAppointmentsComponent {
     private service: DashboardService,
     private rt: Router,
     private router: ActivatedRoute,
-    private login: IdControllerService
+    private login: IdControllerService,
+    private location:Location
   ) { }
 
 
@@ -91,6 +92,8 @@ export class ViewAppointmentsComponent {
     this.rt.navigate([`/chat/${vetId}`], {
       queryParams: {
         name: vetName,
+        id:this.userid,
+        role:this.role,
       },
     });
   }
@@ -101,6 +104,8 @@ export class ViewAppointmentsComponent {
     this.rt.navigate([`/chat/${petId}`], {
       queryParams: {
         name: petOwnerName,
+        id:this.userid,
+        role:this.role,
       },
     });
   }

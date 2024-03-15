@@ -299,7 +299,7 @@
                 <a class="date">{{card.appointmentDate | date: 'dd/MM/yyyy'}}</a>
               </div>
               <div class="icons">
-                <a (click)="navigate2(getPetById(card.petId).petParent.petParentName, card.petId)">
+                <a class="icons" (click)="navigate2(getPetById(card.petId).petParent.petParentName, card.petId)" >
                   <img src="../../assets/images/ic_comment_24px.png" alt="" /></a>
                 <!-- <a href="" class="chat"> <img src="../../assets/images/ic_comment_24px.png" alt=""></a> -->
                 <a class="call"> <img src="../../assets/images/Frame (1).png" alt=""></a>
@@ -318,10 +318,10 @@
                     card.petId
                   )
                 " ngModel="{{ card.appointmentId }}">Details</a>
-              <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="bookAppointment-btn"
+              <!-- <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="bookAppointment-btn"
                 class="detailstext" [routerLink]="['/feedbackpet', card.appointmentId]">
                 Feedback
-              </a>
+              </a> -->
             </div>
           </div>
         </div>
