@@ -3,9 +3,9 @@
 </div> -->
 
 <div class="card-comments">
-    <h4 style="font-family: 'Inter var', sans-serif;">Comments</h4>
-    <div class="comment-info">
-    <div style="width: 100px; top:10px"><img class="imag" src="../../assets/images/vet.jpg"></div>
+  <h4 style="font-family: 'Inter var', sans-serif;">Comments</h4>
+  <div class="comment-info">
+    <div style="width: 100px; top:10px"><img class="imag" [src]="image"></div>
     <div class="comment-details">
       <p style="background: #fff;
       border: none;
@@ -19,7 +19,7 @@
       font-weight: 500;
       padding-bottom: 10px;
       font-family: 'Inter var', sans-serif;
-      width:fit-content;">Dr. John Doe</p>
+      width:fit-content;">{{userName}}</p>
       <br>
       <p style="background: #fff;
       border: none;
@@ -34,4 +34,4 @@
       width:fit-content;">{{comment}}</p>
     </div>
   </div>
-  </div>
+</div>

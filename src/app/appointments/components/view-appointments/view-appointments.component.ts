@@ -21,7 +21,7 @@ import { HeaderComponent } from '../../../shared/components/header/header.compon
     RouterOutlet,
     RouterLink,
     FormsModule,
-    HeaderComponent,
+    HeaderComponent
   ],
 
   templateUrl: './view-appointments.component.html',
@@ -36,7 +36,7 @@ export class ViewAppointmentsComponent {
     private rt: Router,
     private router: ActivatedRoute,
     private login: IdControllerService,
-    private location:Location
+    private location: Location
   ) { }
 
 
@@ -92,8 +92,8 @@ export class ViewAppointmentsComponent {
     this.rt.navigate([`/chat/${vetId}`], {
       queryParams: {
         name: vetName,
-        id:this.userid,
-        role:this.role,
+        id: this.userid,
+        role: this.role,
       },
     });
   }
@@ -104,8 +104,8 @@ export class ViewAppointmentsComponent {
     this.rt.navigate([`/chat/${petId}`], {
       queryParams: {
         name: petOwnerName,
-        id:this.userid,
-        role:this.role,
+        id: this.userid,
+        role: this.role,
       },
     });
   }
